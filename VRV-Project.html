@@ -1164,7 +1164,7 @@ function drawWiring(active=el('wireSystem').value){
  // F1/F2 transmission (Daikin, non-polar 2-wire)
  if(n){line([[180,75],[200,75],[200,170],[220+(n-1)*170+75,170]],BLUE,'6 3');label(210,160,'F1/F2 (DIII-NET) dàn nóng → dàn lạnh',BLUE)}
  // central controllers on outdoor F1/F2 out-out
- ccs.forEach((c,k)=>{const y=200+k*48;box(20,y,160,40,[c.model,ccByModel.get(c.model).name.slice(0,22)],'#eef7e9');line([[100,110],[100,y]],GRN,'6 3')});
+ ccs.forEach((c,k)=>{const y=200+k*48;box(20,y,160,40,[c.model,ccByModel.get(c.model).name.slice(0,26)],'#eef7e9');line([[100,110],[100,y]],GRN,'6 3')});
  if(ccs.length)label(106,130,'F1/F2 out-out',GRN);
  // indoor power bus
  if(n){line([[200,H-30],[220+(n-1)*170+130,H-30]],RED);label(200,H-10,'Nguồn dàn lạnh · CB / dây: chưa xác minh',RED)}
