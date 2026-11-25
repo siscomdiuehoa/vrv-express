@@ -32,7 +32,7 @@ function roomPlan(raw,requested,length){
  if(node.room||node[0]||node[1])throw Error('Đường nhánh trùng hoặc kết thúc tại bộ chia.');
  node.room={name,k,size,path};rooms.push(node.room);
  }
- function sum(n){if(n.room)return n.index=n.room.size[0];if(!n[0]||!n[1])throw Error('Mỗi bộ chia phải có đủ hai ngả 0 và 1.');return n.index=sum(n[0])+sum(n[1])}
+ function sum(n){if(n.room)return n.index=capacityIndex('FXFQ'+n.room.size[0]+'BVEB');if(!n[0]||!n[1])throw Error('Mỗi bộ chia phải có đủ hai ngả 0 và 1.');return n.index=sum(n[0])+sum(n[1])}
  const idx=sum(tree),load=rooms.reduce((a,b)=>a+b.k,0);
  for(const r of rooms)lines.push(r.path+' · '+r.name+' · '+r.k+' kW → FXFQ'+r.size[0]+'BVEB ('+r.size[1]+' kW)');
  const row=catalog.find(([h,kw])=>(!requested||requested===h)&&kw+1e-8>=load&&idx>=12.5*h&&idx<=32.5*h&&rooms.length<=8);
