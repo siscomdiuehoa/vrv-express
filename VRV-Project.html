@@ -32,7 +32,7 @@ function roomPlan(raw,requested,length){
  if(node.room||node[0]||node[1])throw Error('Đường nhánh trùng hoặc kết thúc tại bộ chia.');
  node.room={name,k,size,path};rooms.push(node.room);
  }
- function sum(n){if(n.room)return n.index=n.room.size[0];if(!n[0]||!n[1])throw Error('Mỗi bộ chia phải có đủ hai ngả 0 và 1.');return n.index=sum(n[0])+sum(n[1])}
+ function sum(n){if(n.room)return n.index=capacityIndex('FXFQ'+n.room.size[0]+'BVEB');if(!n[0]||!n[1])throw Error('Mỗi bộ chia phải có đủ hai ngả 0 và 1.');return n.index=sum(n[0])+sum(n[1])}
  const idx=sum(tree),load=rooms.reduce((a,b)=>a+b.k,0);
  for(const r of rooms)lines.push(r.path+' · '+r.name+' · '+r.k+' kW → FXFQ'+r.size[0]+'BVEB ('+r.size[1]+' kW)');
  const row=catalog.find(([h,kw])=>(!requested||requested===h)&&kw+1e-8>=load&&idx>=12.5*h&&idx<=32.5*h&&rooms.length<=8);
@@ -89,6 +89,8 @@ const families=[
  {"id":"Z(BVM)","label":"Ceiling Mounted Cassette(Compact Multi Flow)","models":["FXZQ20BVM","FXZQ25BVM","FXZQ32BVM","FXZQ40BVM","FXZQ50BVM"]},
  {"id":"FXFQ-B","label":"Ceiling Mounted Cassette","models":["FXFQ20BVEB","FXFQ25BVEB","FXFQ32BVEB","FXFQ40BVEB","FXFQ50BVEB","FXFQ63BVEB","FXFQ80BVEB","FXFQ100BVEB","FXFQ125BVEB","FXFQ140BVEB"]}
 ];
+// Daikin VN DAV_0006: class 32 → 31.25 and 63 → 62.5 for every indoor family.
+function capacityIndex(model){const size=Number(model.match(/^[A-Z]+(\d+)/i)?.[1]);return size===32?31.25:size===63?62.5:size}
 const modelsByCode=new Map();
 for(const family of families){
  for(const code of family.models)modelsByCode.set(code,family.id);
@@ -117,8 +119,7 @@ el('chooseOutdoor').onclick=()=>{
   const size=Number(model.match(/^[A-Z]+(\d+)/i)?.[1]);
   const found=family && [...manualModels,[71,8],[160,18],[200,22.4],[250,28],[400,45],[500,56]].find(([n])=>n===size);
   if(!found){el('outcome').textContent='Model '+model+' chưa có dữ liệu công suất trong danh sách.';return}
-  const capacityIndex=found[0]===32 && family!=='FXFQ-B'?31.25:(found[0]===63?62.5:found[0]);
-  index+=capacityIndex*qty;capacity+=found[1]*qty;count+=qty;
+  index+=capacityIndex(model)*qty;capacity+=found[1]*qty;count+=qty;
  }
  const options=catalog.map(([hp,kw])=>({hp,kw,ratio:index/(25*hp)*100}));
  const matches=options.filter(({ratio,kw})=>ratio>=50 && ratio<=130 && kw>=capacity);
@@ -703,7 +704,7 @@ function ivsTotals(units){
  for(const row of units){
   const [, , model,qty,c]=row, size=Number(model.match(/^[A-Z]+(\d+)/)?.[1]);
   if(!modelsByCode.has(model))known=false;
-  ci+=((size===32&&modelsByCode.get(model)!=='FXFQ-B')?31.25:size===63?62.5:size)*qty;count+=qty;
+  ci+=capacityIndex(model)*qty;count+=qty;
   if(c?.cool!==false){if(!(c?.tc>0))cLoad=false;else cc+=qty*c.tc}
   if(c?.heat!==false){if(!(c?.hc>0))hLoad=false;else hc+=qty*c.hc}
  }
@@ -905,8 +906,7 @@ function chainPipes(model,units,style='tight'){
  let downstream=0;
  for(let i=units.length-1;i>=0;i--){
   const code=units[i].model,size=Number(code.match(/^[A-Z]+(\d+)/)?.[1]);
-  const ci=size===63?62.5:size===32&&modelsByCode.get(code)!=='FXFQ-B'?31.25:size;
-  downstream+=ci;
+  downstream+=capacityIndex(code);
   const last=i===units.length-1;
   const port=indoorPort(code,size);
   const branchGas=downstream<150?15.9:downstream<200?19.1:22.2;
@@ -965,14 +965,14 @@ function routingReport(layout,cfg){
  const sum=(r,which)=>r.reduce((n,e)=>n+(e.reading?.real||0)+(which==='eq'&&valid(e.reading?.extra)?e.reading.extra:0),0);
  const longest=(fn)=>Math.max(0,...routes.map(fn));
  const eq=longest(r=>sum(r,'eq')),actual=longest(r=>sum(r)),after=longest(r=>sum(r.slice(1))),total=sum(edges);
- const isH=cfg.ouSeries==='VRV H STD(VN)'||hasBymPiping(cfg.model),lim=isH?[165,190,1000,90]:cfg.model==='RXYMQ4AVE'?[50,65,250,40]:['RXYMQ5BVM','RXYMQ6BVM'].includes(cfg.model)?[70,90,300,40]:[100,130,300,40];
+ const isH=cfg.ouSeries==='VRV H STD(VN)'||hasBymPiping(cfg.model),ouHp=Number(cfg.model.match(/\d+/)?.[0]),lim=isH?(/^RXQ\d/.test(cfg.model)&&ouHp>=68?[120,145,1000,90]:[165,190,1000,90]):cfg.model==='RXYMQ4AVE'?[50,65,250,40]:['RXYMQ5BVM','RXYMQ6BVM'].includes(cfg.model)?[70,90,300,40]:[100,130,300,40];
  const warns=[];
  const checks=[['Tuyến thực xa nhất',actual],['Tuyến tương đương xa nhất',eq],['Tổng chiều dài thực toàn hệ',total],['Sau bộ chia đầu đến dàn xa nhất',after]];
  for(const [i,[name,meters]] of checks.entries()){if(meters>lim[i])warns.push(name+' đạt '+meters.toFixed(2)+' m, vượt giới hạn '+lim[i]+' m.')}
  if(!isH)warns.push('Giới hạn VRV IV S theo catalogue Daikin VN, trang 130: '+lim[0]+' m thực / '+lim[1]+' m tương đương, tổng '+lim[2]+' m, sau bộ chia đầu '+lim[3]+' m.');
  if(isH&&after>40&&after<=90)warns.push('Tuyến sau bộ chia đầu vượt 40 m: cần kiểm tra điều kiện mở rộng trong Engineering Data Book.');
  const up=['RXYQ8AYM','RXYQ10AYM'].includes(cfg.model)&&eq>=90;
- if(isH&&!up&&eq>=90)warns.push('Tra bảng tăng cỡ theo model cho tuyến từ 90 m.');
+ if(isH&&!up&&eq>=90)warns.push(hasBymPiping(cfg.model)?'Tuyến tương đương ≥ 90 m: tăng cỡ ống lỏng và ống hơi chính theo catalogue.':'Tra bảng tăng cỡ theo model cho tuyến từ 90 m.');
  if(up)warns.push('Ống lỏng chính dự kiến tăng từ 9.5 lên 12.7 mm. Dấu ? ở ống hơi chính yêu cầu đối chiếu bảng tăng cỡ theo model.');
  if(!isH&&eq>=90)warns.push('Đối chiếu yêu cầu tăng ống chính theo đúng model VRV IV S; cỡ hiển thị là cỡ cơ sở.');
  const missing=edges.filter(e=>!e.reading?.real).length;
