@@ -130,6 +130,7 @@ el('chooseOutdoor').onclick=()=>{
   if(!found){el('outcome').textContent='Model '+model+' chưa có dữ liệu công suất trong danh sách.';return}
   index+=capacityIndex(model)*qty;capacity+=found[1]*qty;count+=qty;
  }
+ capacity=Math.round(capacity*1000)/1000;
  const options=catalog.map(([hp,kw])=>({hp,kw,ratio:index/(25*hp)*100}));
  const matches=options.filter(({ratio,kw})=>ratio>=50 && ratio<=130 && kw>=capacity);
  const label=o=>'RXYQ'+o.hp+'U · '+o.kw+' kW · kết nối '+o.ratio.toFixed(1)+'%';
@@ -275,7 +276,7 @@ function openUnit(item=null){
  el('zone').value=item?.[1]??'Ind '+num;
  const code=item?.[2]??'FXSQ32PAVE';
  const savedFamily=item?.[4]?.family;
- el('family').value=families.some(f=>f.id===savedFamily)?savedFamily:(modelsByCode.get(code)??'S-PA');
+ el('family').value=families.find(f=>f.id===savedFamily)?.models.includes(code)||!modelsByCode.has(code)&&families.some(f=>f.id===savedFamily)?savedFamily:(modelsByCode.get(code)??'S-PA');
  fillModels();el('model').value=modelsByCode.get(code)===el('family').value?code:'manual';syncCustom();if(el('model').value==='manual')el('customModel').value=code;el('qty').value=item?.[3]??1;
  for(const id of Object.keys(defaults)){if(typeof defaults[id]==='boolean')el(id).checked=c[id];else el(id).value=c[id]}
  el('submitIndoor').textContent=item?'Apply':'Add';updateCriteria();el('indoorDialog').showModal();el('zone').focus();el('zone').select();
