@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>VRV Selection · Việt Nam</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:13px "Segoe UI",Arial,sans-serif;color:#14222b;background:#d9effc}button,input,select,textarea{font:inherit;color:inherit}button,select,input,textarea{border:1px solid #aab5bc;border-radius:3px;background:#fff}button{cursor:pointer;padding:4px 10px}button:hover:not(:disabled){background:#e8f4fc;border-color:#2384b8}button:disabled{color:#84939d;cursor:default}input,select{height:24px;padding:1px 5px}button:focus-visible,input:focus-visible,select:focus-visible,tr:focus-visible{outline:2px solid #0075bb;outline-offset:1px}
+#window{min-height:100vh;display:flex;flex-direction:column}.titlebar,.dialogtitle{background:#f3f4f5;padding:7px 12px;font-size:12px}.mark{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:7px;background:linear-gradient(135deg,#146e9c 0 35%,#67c4e8 35% 54%,transparent 54%)}.tools{display:flex;gap:3px;flex-wrap:wrap;padding:3px 8px;background:linear-gradient(white,#e0f3ff);border-block:1px solid #bccad3}.tools button{background:transparent;border-color:transparent}.tools b{color:#197aa6;margin-right:4px}nav{display:flex;overflow:auto}nav button{min-width:112px;width:15%;border:0;border-right:2px solid white;border-radius:0;background:#777e83;color:white;height:27px;padding:2px}nav button.active{background:#008ed0;box-shadow:inset 0 -3px #f3a23a}nav button:disabled{background:#808489;color:#eee}.project{display:flex;align-items:center;gap:18px;padding:12px 3.5vw 8px}.tile{width:94px;height:94px;background:white;position:relative;flex:none;padding:3px 6px;color:#008bc5;font-size:20px;font-weight:800;font-style:italic}.tile:after{content:"";display:block;width:75px;height:65px;background:linear-gradient(135deg,#161819 0 28%,#69bfe2 28% 54%,white 54%)}.fields{display:grid;grid-template-columns:120px 185px 120px 185px;gap:4px 8px;align-items:center}.panel{margin:0 10px 8px;flex:1}.gridwrap{display:flex;gap:7px;min-height:55vh;height:calc(100vh - 233px)}.sheet{flex:1;overflow:auto;background:#f6f6f6;border:1px solid #87979f}table{border-collapse:collapse;font-size:12px;width:max-content;min-width:100%;text-align:left}th,td{height:25px;padding:3px 7px;border:1px solid #dde1e4;font-weight:400;white-space:nowrap}th{background:#fff;position:sticky;top:0}td{background:#fff}tr.selected td{background:#cceaff}.rail{width:33px;display:flex;gap:6px;flex-direction:column}.rail button{padding:2px;height:31px;font-size:12px}.rail #addIndoor{color:#006b9f;font-weight:700}.status,.dialogfoot{text-align:center;background:#eee;border-top:1px solid #ccd2d5;padding:3px}.block{padding:12px;background:#fafafa;border:1px solid #aab7c0;margin:8px 0}h2{font-size:15px;margin:2px 0 10px}.action{display:flex;align-items:center;gap:8px;margin:8px 0}.note{color:#405963;font-size:12px}dialog{width:min(508px,96vw);padding:0;border:1px solid #a8b4ba;border-radius:8px;background:#d9effc;box-shadow:0 12px 36px #18252c50}dialog::backdrop{background:#18334512}.dialogtitle{display:flex;align-items:center;justify-content:space-between}.dialogtitle button{border:0;background:transparent;font-size:17px;line-height:14px}.tablabel{display:table;background:#fafafa;margin:10px 9px 0;padding:4px 8px}.formbody{margin:0 9px;padding:8px 10px;background:#fafafa}.formbody label,.formbody fieldset{margin:4px 0}fieldset{border:1px solid #d0d6da;padding:5px 8px}legend{font-weight:600}.field{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:5px}.field select,.field input{width:min(100%,185px)}.field.family select{width:100%}.criteria{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.criteria input,.load input{width:62px}.load{display:flex;align-items:center;justify-content:space-between;max-width:340px;padding-left:20px}.footbuttons{display:flex;gap:12px;justify-content:flex-end;padding:8px}.footbuttons button{min-width:85px}.primary{border-color:#008fd3}input[type=checkbox]{height:auto;width:auto;vertical-align:middle}.groupTable{width:100%}pre{white-space:pre-wrap}.panel[hidden]{display:none}@media(max-width:780px){.project{padding:6px;gap:8px}.fields{grid-template-columns:auto minmax(115px,1fr)}.tile{width:72px}.tile:after{width:60px}.gridwrap{height:60vh}nav button{min-width:108px}.project input,.project select{width:100%}}@media print{.tools,nav,.project,.rail,.status,.titlebar,.action,#window>.panel:not(#reports){display:none!important}#reports[hidden]{display:block!important}.block{border:0}}
+[hidden]{display:none!important}#ouDialog{width:min(970px,98vw);max-height:95vh;overflow:auto}.oubody{display:grid;grid-template-columns:1.25fr 1fr .9fr;gap:9px;margin:0 10px;background:#fafafa;padding:8px}.oubody fieldset label{display:flex;justify-content:space-between;margin:5px;gap:6px}.oubody input{max-width:100px}.oubody select[multiple]{width:100%;height:190px}.oubody h4{color:#087ba9;margin:9px 0}.oualt{background:#fff;margin:0 10px}.oualt table{width:100%}#ouTotals{white-space:pre-line;line-height:1.8}@media(max-width:680px){.oubody{grid-template-columns:1fr}.oubody select[multiple]{height:85px}}.pipeLayout{display:grid;grid-template-columns:minmax(165px,25%) minmax(0,1fr);min-height:65vh;border:1px solid #91a4af}.pipeLayout aside{background:#f6f6f6;padding:10px;border-right:1px solid #91a4af}.pipeLayout pre{font:12px/1.7 Segoe UI,sans-serif}.pipeTools,.pipeMessage{padding:8px;background:#e0effb}.pipeTools label{margin-right:16px}#pipeView{background:white;min-height:300px;overflow:auto}#pipeView svg{display:block}.pipeMessage p{margin:5px 0}#piping details{margin-top:8px}@media(max-width:670px){.pipeLayout{grid-template-columns:1fr}.pipeLayout aside{max-height:115px;overflow:auto}}#edgeDialog{padding:14px;width:360px}#edgeDialog .field{grid-template-columns:1fr 100px}#edgeTitle{font-weight:600}#jointDetails{overflow:auto}.pipeHot{cursor:pointer}.pipeHot:focus,.pipeHot:hover{stroke:#008dd2;stroke-opacity:.35}</style></head><body><main id="window">
+<div class="titlebar"><span class="mark"></span>VRV Selection · Việt Nam</div><div class="tools"><button id="new"><b>▤</b>New…</button><button id="open"><b>▱</b>Open…</button><button id="save"><b>▣</b>Save As…</button><input type="file" id="openFile" accept=".json" hidden><button id="print"><b>▧</b>Print…</button></div>
+<nav aria-label="Mô-đun"><button data-tab="indoor" class="active">Indoor Units</button><button data-tab="outdoor">Outdoor Units</button><button data-tab="piping">Piping</button><button disabled title="Chưa hỗ trợ sơ đồ điện">Wiring</button><button disabled title="Chưa có danh mục bộ điều khiển">Centralized Controllers</button><button data-tab="reports">Reports</button></nav>
+<div class="project"><div class="tile" aria-hidden="true">VRV</div><div class="fields"><label for="project">Project name</label><input id="project"><label for="client">Client name</label><input id="client"><label for="ref">Reference</label><input id="ref"><label for="revision">Revision</label><input id="revision"><label for="country">Country</label><select id="country"><option>Viet Nam</option></select><span></span><span></span><label for="refri">Refrigerant</label><select id="refri"><option>R410A</option></select><label for="ou">OU group</label><select id="ou"><option>VRV 50Hz</option></select></div></div>
+<section class="panel" id="indoor"><div class="gridwrap"><div class="sheet"><table><thead><tr id="columns"></tr></thead><tbody id="rows"></tbody></table></div><aside class="rail"><button id="addIndoor" title="Add VRV indoor unit">VRV<br>＋</button><button id="edit" title="Edit selected unit" disabled>✎</button><button id="del" title="Delete selected unit" disabled>×</button></aside></div></section>
+<section class="panel" id="outdoor" hidden><div class="block"><h2>Outdoor Unit Selection</h2><p>Chọn hệ để tính. Gán các dàn lạnh vào cùng hệ ở cột System.</p><div class="action"><label>System <select id="system"></select></label><button id="newSystem">＋ Add system</button><button id="ouEdit" class="primary">Edit Outdoor Unit Selection…</button><button id="chooseOutdoor">Tra dòng VRV IV+ RXYQ-U</button></div><div class="sheet"><table class="groupTable"><thead><tr><th>Name<th>FCU<th>Quantity<th>System</tr></thead><tbody id="groups"></tbody></table></div><p id="outcome" aria-live="polite"></p></div><details class="block"><summary>Tổ hợp mẫu theo catalogue</summary><h2>Chọn sơ bộ một hệ VRV IV+ RXYQ-U</h2><p>So tải lạnh toàn hệ với công suất danh định và tra tổ hợp mẫu. Chưa hiệu chỉnh nhiệt độ, chiều dài ống hoặc tải từng phòng.</p><label>Tải lạnh toàn hệ (kW)<input id="loadKw" type="number" min=".01" step=".01"></label><button id="pick">Thêm tổ hợp nhỏ nhất đủ tải vào dự án</button><button id="verify">Kiểm tra danh sách hiện tại</button><p id="result" aria-live="polite"></p><a href="https://catalogues.daikin.eu/flipbooks/EN/Air_conditioning/ECPEN26-200/130/">Catalogue Daikin, trang 130</a></details></section>
+<section class="panel" id="piping" hidden><div class="pipeLayout"><aside><strong>System</strong><pre id="pipeTree"></pre></aside><section><div class="pipeTools"><label>Outdoor unit <select id="pipeSystem"></select></label><label id="jointMode" hidden>REFNET <select id="jointStyle"><option value="tight">TIGHTFIT · không hàn</option><option value="brazed">Khớp hàn</option></select></label><label>Scale <select id="pipeScale"><option value="fit">Fit window</option><option value="1">100%</option><option value="1.5">150%</option><option value="2">200%</option></select></label></div><div id="pipeView"></div><div class="pipeMessage"><strong>Messages</strong><p id="pipeMsg"></p><details id="jointDetails"><summary>Đầu nối và đầu giảm tại REFNET</summary><table><thead><tr id="jointHead"></tr></thead><tbody id="jointRows"></tbody></table></details></div></section></div><details><summary>Công cụ tính đường ống</summary><div class="block"><h2>Bóc chiều dài ống hai đường</h2><label>Chiều dài thực từng đoạn (m), cách nhau bằng dấu cách<input id="segments" placeholder="12 8 6"></label><button id="measure">Tính chiều dài</button><p id="meters"></p><small>Nhập mỗi đoạn chung một lần. Kết quả là khối lượng ống, chưa chọn đường kính hoặc kiểm tra chênh cao.</small></div> <div class="block"><h2>Tính chọn theo phòng · VRV IV+ R410A</h2><p>Mỗi dòng ghi đường nhánh, tên phòng và tải lạnh tổng (kW), cách nhau bằng dấu chấm phẩy. Mỗi bộ chia có hai ngả 0 và 1. Ví dụ 0, 10 và 11 tạo hai bộ chia.</p><label>Phòng và nhánh ống<textarea id="rooms" rows="6" cols="42" placeholder="0; Phòng họp; 6&#10;10; Văn phòng; 5&#10;11; Sảnh; 4"></textarea></label><label>Dàn nóng (HP)<select id="hp"><option value="0">Tự chọn</option></select></label><label>Tuyến tương đương dài nhất (m)<input id="equiv" type="number" min="0.01" step="any"></label><button id="calc">Tính phương án</button><pre id="plan" style="white-space:pre-wrap" aria-live="polite"></pre><small>Tính sơ bộ theo công suất lạnh danh định ở tốc độ quạt cao. Chỉ xét một RXYQ-U, cassette FXFQ-B và nhánh chữ Y tiêu chuẩn. Chưa hiệu chỉnh theo nhiệt độ, độ cao hoặc kiểm tra toàn bộ giới hạn thi công.</small></div></details></section><section class="panel" id="reports" hidden><div class="block"><h2 id="reportName">Project report</h2><p id="reportMeta"></p><div class="sheet"><table><thead><tr><th>System<th>Name<th>Model<th>Qty<th>Cooling DBT / RH<th>Rq TC (kW)<th>Rq SC (kW)</tr></thead><tbody id="reportRows"></tbody></table></div><p id="reportOutdoor"></p><pre id="reportPipe"></pre><button class="action" onclick="print()">Print report / PDF</button></div></section><footer class="status" id="status">Add VRV indoor units</footer></main>
+<dialog id="edgeDialog"><header id="edgeTitle"></header><form id="edgeForm"><label class="field">Ống thực (m)<input type="number" id="edgeReal" min="0.01" step="any" required></label><label class="field">Phụ kiện quy đổi thêm (m)<input type="number" id="edgeExtra" min="0" step="any" placeholder="Chưa biết"></label><small>Nhập 0 nếu không có phần chiều dài cộng thêm.</small><div class="footbuttons"><button type="button" id="edgeClear">Xóa số đo</button><button type="button" id="edgeCancel">Hủy</button><button>Lưu</button></div></form></dialog><dialog id="ouDialog" aria-label="Edit Outdoor Unit Selection"><div class="dialogtitle">Edit Outdoor Unit Selection<button id="ouClose" aria-label="Close">×</button></div><div class="tablabel">System</div><form id="ouForm"><div class="oubody"><fieldset><legend>Outdoor unit</legend><label>Name <input id="ouName" required maxlength="60"></label><label>Family <select id="ouFamily" aria-label="Family"></select></label><label>Series <select id="ouSeries"></select></label><label>Max. connection ratio (%) <select id="ouLimit"><option>100</option><option>110</option><option>120</option><option selected>130</option></select></label><h4>Design conditions cooling</h4><label>Outdoor DBT (°C) <input id="ouC" type="number" step=".1" required></label><p>Evaporating temperature · <span id="ouTe"></span></p><label>Operational load (%) <input id="ouCP" type="number" min="0" max="100" step="any" required></label><h4>Design conditions heating</h4><label>Outdoor DBT (°C) <input id="ouH" type="number" step=".1" required></label><label>RH (%) <input id="ouRH" type="number" min="0" max="100" required></label><label>Operational load (%) <input id="ouHP" type="number" min="0" max="100" step="any" required></label></fieldset><div><h4>System</h4><label for="attached" id="rootName"></label><select id="attached" size="9" multiple></select><button type="button" id="detach">Trả dàn đã chọn →</button><p id="ouTotals"></p></div><div><h4>Available indoor units</h4><select id="available" size="10" multiple aria-label="Available indoor units"></select><button type="button" id="attach">← Ghép dàn đã chọn</button></div></div><fieldset class="oualt"><legend>Alternative solutions · sơ bộ theo catalogue</legend><table><thead><tr><th>Model<th>CR %<th>TC danh định (kW)<th>HC danh định (kW)</tr></thead><tbody id="ouOptions"></tbody></table><p id="ouNote"></p><a id="ouSource" target="_blank" rel="noopener" hidden>Thông số trong catalogue Daikin Việt Nam</a></fieldset><div class="footbuttons"><button class="primary">OK</button><button type="button" id="ouCancel">Cancel</button></div></form></dialog><dialog id="indoorDialog" aria-labelledby="dlgTitle"><div class="dialogtitle"><span id="dlgTitle"><i class="mark"></i>Edit Indoor Unit Selection</span><button type="button" id="xclose" aria-label="Close">×</button></div><div class="tablabel">Indoor Unit</div><form id="entry"><div class="formbody"><label class="field">Name<input id="zone" required maxlength="120"></label><fieldset><legend>Model</legend><label><input type="checkbox" checked disabled> Manual selection</label><label class="field">Class<select><option>VRV</option></select></label><label class="field family">Family<select id="family"><option value="FXSQ">S-PA - Ceiling Mounted Duct(MSP)</option><option value="FXFQ">FXFQ-B - Ceiling Mounted Cassette</option></select></label><label class="field">FCU<select id="model" required></select></label><label id="customField" class="field" hidden>FCU code<input id="customModel" pattern="[A-Za-z0-9][A-Za-z0-9._/-]{1,39}" maxlength="40" placeholder="Mã trên catalogue"></label></fieldset><fieldset><legend>Design criteria</legend><div class="criteria"><label><input type="checkbox" id="cool" checked> Cooling</label><label>DBT °C <input id="dbt" type="number" min="15" max="35" step=".1" required value="24"></label><label>RH % <input id="rh" type="number" min="1" max="100" step=".1" required value="50"></label></div><label class="load">Required total capacity (Rq TC)<span>kW <input id="tc" type="number" min="0" step="any" value="0" required></span></label><label class="load">Required sensible capacity (Rq SC)<span>kW <input id="sc" type="number" min="0" step="any" value="0" required></span></label><div class="criteria"><label><input id="heat" type="checkbox" checked> Heating</label><label>DBT °C <input id="hdb" type="number" step=".1" value="20" required></label></div><label class="load">Required capacity (Rq HC)<span>kW <input id="hc" type="number" min="0" step="any" value="0" required></span></label></fieldset><label class="field">Quantity<input id="qty" type="number" min="1" max="99999" value="1" required></label><div id="capacityPreview" class="note" aria-live="polite"></div></div><div class="footbuttons"><button class="primary" id="submitIndoor">Add</button><button type="button" id="closeIndoor">Close</button></div></form><div class="dialogfoot">Indoor unit selection</div></dialog><script>const el=id=>document.getElementById(id);let items=[];
+
+const catalog=[[8,22.4,4,0,0],[10,28,0,4,0],[12,33.5,6,0,0],[14,40,1,5,0],[16,45,0,4,2],[18,50.4,3,5,0],[20,52,2,6,0]];
+const indoor=['FXFQ50BVEB','FXFQ63BVEB','FXFQ80BVEB'];
+const outdoor=r=>'RXYQ'+r[0]+'U';
+el('pick').onclick=()=>{const kw=el('loadKw').valueAsNumber,r=catalog.find(x=>x[1]>=kw);if(!(kw>0&&r)){el('result').textContent='Nhập tải lớn hơn 0 và tối đa 52 kW.';return}if(items.length){el('result').textContent='Chọn tự động dành cho danh sách trống. Với danh sách hiện tại hãy dùng Kiểm tra.';return}items.push(['Dàn nóng','Hệ 1',outdoor(r),1]);indoor.forEach((name,i)=>{if(r[i+2])items.push(['Dàn lạnh','Hệ 1',name,r[i+2]])});render();el('verify').click()};
+el('verify').onclick=()=>{const match=catalog.find(r=>{const outs=items.filter(x=>x[0]==='Dàn nóng'),ins=items.filter(x=>x[0]==='Dàn lạnh');return outs.length===1&&outs[0][2]===outdoor(r)&&outs[0][3]===1&&ins.every(x=>indoor.includes(x[2]))&&indoor.every((n,i)=>ins.filter(x=>x[2]===n).reduce((a,x)=>a+x[3],0)===r[i+2])});el('result').textContent=match?'Khớp tổ hợp mẫu '+outdoor(match)+' theo catalogue, công suất danh định '+match[1]+' kW.':'Ngoài bảy tổ hợp mẫu, chưa xác định tính tương thích.'};
+el('measure').onclick=()=>{const lengths=el('segments').value.trim().split(/\s+/).map(x=>Number(x.replace(',','.')));const sum=lengths.reduce((a,b)=>a+b,0);el('meters').textContent=lengths.every(x=>Number.isFinite(x)&&x>0)?'Ống lỏng '+sum.toFixed(2)+' m · Ống gas '+sum.toFixed(2)+' m · Tổng '+(2*sum).toFixed(2)+' m':'Mỗi đoạn cần có chiều dài dương.'};
+
+
+const sizes=[[20,2.2],[25,2.8],[32,3.6],[40,4.5],[50,5.6],[63,7.1],[80,9],[100,11.2],[125,14],[140,16]];
+for(const [h] of catalog) el('hp').add(new Option(h,h));
+function roomPlan(raw,requested,length){
+ const tree={}, rooms=[],lines=[];
+ for(const line of raw.trim().split(/\r?\n/)){
+ const fields=line.split(';').map(x=>x.trim()),[path,name,value]=fields,k=Number((value||'').replace(',','.'));
+ if(fields.length!==3||!name||! /^[01]{1,32}$/.test(path)||!(k>0))throw Error('Kiểm tra tên phòng, tải và đường nhánh ở dòng '+(rooms.length+1));
+ const size=sizes.find(x=>x[1]>=k);if(!size)throw Error(name+' vượt 14 kW, cần chia tải cho nhiều dàn.');
+ let node=tree;for(const bit of path){if(node.room)throw Error('Nhánh đi xuyên qua một dàn lạnh.');node=node[bit]??={}}
+ if(node.room||node[0]||node[1])throw Error('Đường nhánh trùng hoặc kết thúc tại bộ chia.');
+ node.room={name,k,size,path};rooms.push(node.room);
+ }
+ function sum(n){if(n.room)return n.index=n.room.size[0];if(!n[0]||!n[1])throw Error('Mỗi bộ chia phải có đủ hai ngả 0 và 1.');return n.index=sum(n[0])+sum(n[1])}
+ const idx=sum(tree),load=rooms.reduce((a,b)=>a+b.k,0);
+ for(const r of rooms)lines.push(r.path+' · '+r.name+' · '+r.k+' kW → FXFQ'+r.size[0]+'BVEB ('+r.size[1]+' kW)');
+ const row=catalog.find(([h,kw])=>(!requested||requested===h)&&kw+1e-8>=load&&idx>=12.5*h&&idx<=32.5*h&&rooms.length<=8);
+ if(!row)return lines.concat('Không có dàn nóng đạt đồng thời tải '+load.toFixed(2)+' kW và chỉ số kết nối '+idx+' trong phạm vi đã chọn.').join('\n');
+ const h=row[0],main=h===8?[19.1,9.5]:h===10?[22.2,9.5]:[28.6,h<=16?12.7:15.9];
+ lines.push('RXYQ'+h+'U · '+row[1]+' kW · tải '+load.toFixed(2)+' kW · tổng chỉ số '+idx+' (giới hạn '+12.5*h+'–'+32.5*h+'); cần kiểm tra số dàn tối đa và hiệu chỉnh điều kiện vận hành');
+ if(!(length>0&&length<90))return lines.concat('Chỉ tra ống tiêu chuẩn cho tuyến tương đương lớn hơn 0 và dưới 90 m.').join('\n');
+ function visit(n,path){const i=n.index;if(n.room){lines.push(path+' → '+n.room.name+' · '+(i<=50?'12.7 / 6.4':'15.9 / 9.5'));return}
+ const pipe=!path?main:i<150?[15.9,9.5]:i<200?[19.1,9.5]:i<290?[22.2,9.5]:i<420?[28.6,12.7]:i<640?[28.6,15.9]:[34.9,19.1];
+ const kit=!path?(h<=10?'29T9':'64T'):i<200?'20T':i<290?'29T9':i<640?'64T':'75T';
+ lines.push((path||'Ống chính')+' · '+pipe.map((d,j)=>Math.min(d,main[j])).join(' / ')+' → KHRQ22M'+kit+' · chỉ số '+i);visit(n[0],path+'0');visit(n[1],path+'1')}
+ lines.push('Đường kính ngoài gas / lỏng (mm)');visit(tree,'');return lines.join('\n')
+}
+el('calc').onclick=()=>{try{el('plan').textContent=roomPlan(el('rooms').value,+el('hp').value,+el('equiv').value)}catch(e){el('plan').textContent=e.message}};
+for(const id of ['rooms','hp','equiv'])el(id).oninput=()=>el('plan').textContent='';
+
+
+const manualModels=[[20,2.2],[25,2.8],[32,3.6],[40,4.5],[50,5.6],[63,7.1],[80,9],[100,11.2],[125,14],[140,16]];
+const families=[
+ {"id":"A(AVM)","label":"Wall Mounted","models":["FXAQ20AVM","FXAQ25AVM","FXAQ32AVM","FXAQ40AVM","FXAQ50AVM","FXAQ63AVM"]},
+ {"id":"AP","label":"Wall Mounted(Flat Panel)","models":["FXAQ20PVE","FXAQ25PVE","FXAQ32PVE","FXAQ40PVE","FXAQ50PVE","FXAQ63PVE"]},
+ {"id":"B","label":"Clean Type","models":["FXBQ40PVE","FXBQ50PVE","FXBQ63PVE"]},
+ {"id":"BP","label":"Clean-Separate Outlet","models":["FXBPQ63PVE"]},
+ {"id":"C","label":"Ceiling Mounted Cassette(Double Flow)","models":["FXCQ20MVE","FXCQ25MVE","FXCQ32MVE","FXCQ40MVE","FXCQ50MVE","FXCQ63MVE","FXCQ80MVE","FXCQ125MVE"]},
+ {"id":"C(AVM)","label":"Ceiling Mounted Cassette(Double Flow)","models":["FXCQ20AVM","FXCQ25AVM","FXCQ32AVM","FXCQ40AVM","FXCQ50AVM","FXCQ63AVM","FXCQ80AVM","FXCQ125AVM"]},
+ {"id":"C(BVM)","label":"Ceiling Mounted Cassette(Double Flow)","models":["FXCQ20BVM","FXCQ25BVM","FXCQ32BVM","FXCQ40BVM","FXCQ50BVM","FXCQ63BVM","FXCQ80BVM","FXCQ125BVM"]},
+ {"id":"D","label":"Slim Ceiling Mounted Duct","models":["FXDQ20PBVE","FXDQ25PBVE","FXDQ32PBVE","FXDQ40NBVE","FXDQ50NBVE","FXDQ63NBVE"]},
+ {"id":"D(PDVE)","label":"Slim Ceiling Mounted Duct","models":["FXDQ20PDVE","FXDQ25PDVE","FXDQ32PDVE","FXDQ40NDVE","FXDQ50NDVE","FXDQ63NDVE"]},
+ {"id":"DB(AVM)","label":"Slim Ceiling Mounted Duct (Bedroom)","models":["FXDBQ40AVM","FXDBQ50AVM","FXDBQ63AVM","FXDBQ80AVM"]},
+ {"id":"DS","label":"Slim Ceiling Mounted Duct (Compact)","models":["FXDQ20SPV1","FXDQ25SPV1","FXDQ32SPV1","FXDQ40SPV1","FXDQ50SPV1","FXDQ63SPV1"]},
+ {"id":"DS(AVM)","label":"Slim Ceiling Mounted Duct(3D Airflow with Sensing)","models":["FXDSQ20AVM","FXDSQ25AVM","FXDSQ32AVM","FXDSQ40AVM","FXDSQ50AVM","FXDSQ63AVM"]},
+ {"id":"DT","label":"Slim Ceiling Mounted Duct(w/o drain pump)","models":["FXDQ20PBVET","FXDQ25PBVET","FXDQ32PBVET","FXDQ40NBVET","FXDQ50NBVET","FXDQ63NBVET"]},
+ {"id":"DT(PDVET)","label":"Slim Ceiling Mounted Duct(w/o drain pump)","models":["FXDQ20PDVET","FXDQ25PDVET","FXDQ32PDVET","FXDQ40NDVET","FXDQ50NDVET","FXDQ63NDVET"]},
+ {"id":"E","label":"Ceiling Mounted Cassette(Single Flow)","models":["FXEQ20AV36","FXEQ25AV36","FXEQ32AV36","FXEQ40AV36","FXEQ50AV36","FXEQ63AV36"]},
+ {"id":"F(AVM)","label":"Ceiling Mounted Cassette(Round Flow)","models":["FXFQ25AVM","FXFQ32AVM","FXFQ40AVM","FXFQ50AVM","FXFQ63AVM","FXFQ80AVM","FXFQ100AVM","FXFQ125AVM","FXFQ140AVM"]},
+ {"id":"FR(AVM)","label":"Ceiling Mounted Cassette(Round Flow)(Streamer)","models":["FXFRQ25AVM","FXFRQ32AVM","FXFRQ40AVM","FXFRQ50AVM","FXFRQ63AVM","FXFRQ80AVM","FXFRQ100AVM","FXFRQ125AVM","FXFRQ140AVM"]},
+ {"id":"FS(AVM)","label":"Ceiling Mounted Cassette(Round Flow with Sensing)","models":["FXFSQ25AVM","FXFSQ32AVM","FXFSQ40AVM","FXFSQ50AVM","FXFSQ63AVM","FXFSQ80AVM","FXFSQ100AVM","FXFSQ125AVM","FXFSQ140AVM"]},
+ {"id":"FS(SVM)","label":"Ceiling Mounted Cassette(Round Flow with Sensing)","models":["FXFQ25SVM","FXFQ32SVM","FXFQ40SVM","FXFQ50SVM","FXFQ63SVM","FXFQ80SVM","FXFQ100SVM","FXFQ125SVM"]},
+ {"id":"FT(AVM)","label":"Ceiling Mounted Cassette(Round Flow with Sensing)(Streamer)","models":["FXFTQ25AVM","FXFTQ32AVM","FXFTQ40AVM","FXFTQ50AVM","FXFTQ63AVM","FXFTQ80AVM","FXFTQ100AVM","FXFTQ125AVM","FXFTQ140AVM"]},
+ {"id":"H","label":"Ceiling Suspended","models":["FXHQ32MAVE","FXHQ63MAVE","FXHQ100MAVE"]},
+ {"id":"H(BVM)","label":"Ceiling Suspended(Streamer)","models":["FXHQ125BVM","FXHQ140BVM"]},
+ {"id":"L","label":"Floor Standing","models":["FXLQ20MAVE","FXLQ25MAVE","FXLQ32MAVE","FXLQ40MAVE","FXLQ50MAVE","FXLQ63MAVE"]},
+ {"id":"M","label":"Ceiling Mounted Duct","models":["FXMQ40MAVE","FXMQ50MAVE","FXMQ63MAVE","FXMQ80MAVE","FXMQ100MAVE","FXMQ125MAVE","FXMQ200MAVE","FXMQ250MAVE"]},
+ {"id":"M-PA","label":"Ceiling Mounted Duct","models":["FXMQ20PAVE","FXMQ25PAVE","FXMQ32PAVE","FXMQ40PAVE","FXMQ50PAVE","FXMQ63PAVE","FXMQ80PAVE","FXMQ100PAVE","FXMQ125PAVE","FXMQ140PAVE"]},
+ {"id":"M-PVM","label":"Ceiling Mounted Duct","models":["FXMQ160PVM","FXMQ200PVM","FXMQ250PVM"]},
+ {"id":"N","label":"Concealed Floor Standing","models":["FXNQ20MAVE","FXNQ25MAVE","FXNQ32MAVE","FXNQ40MAVE","FXNQ50MAVE","FXNQ63MAVE"]},
+ {"id":"S","label":"Ceiling Mounted Duct (Superseded)","models":["FXSQ20PVE","FXSQ25PVE","FXSQ32PVE","FXSQ40PVE","FXSQ50PVE","FXSQ63PVE","FXSQ80PVE","FXSQ100PVE","FXSQ125PVE","FXSQ140PVE"]},
+ {"id":"S-PA","label":"Ceiling Mounted Duct(MSP)","models":["FXSQ20PAVE","FXSQ25PAVE","FXSQ32PAVE","FXSQ40PAVE","FXSQ50PAVE","FXSQ63PAVE","FXSQ80PAVE","FXSQ100PAVE","FXSQ125PAVE","FXSQ140PAVE"]},
+ {"id":"U","label":"4-Way Flow Ceiling Suspended","models":["FXUQ71AVEB","FXUQ100AVEB"]},
+ {"id":"V","label":"Floor Standing Duct","models":["FXVQ125NY14","FXVQ200NY14","FXVQ250NY14","FXVQ400NY14","FXVQ500NY14"]},
+ {"id":"V6","label":"Floor Standing Duct (High static pressure type)","models":["FXVQ500NY16"]},
+ {"id":"Z","label":"Ceiling Mounted Cassette(Compact Multi Flow) (Superseded)","models":["FXZQ20MVE","FXZQ25MVE","FXZQ32MVE","FXZQ40MVE","FXZQ50MVE"]},
+ {"id":"Z(AVM)","label":"Ceiling Mounted Cassette(Compact Multi Flow)","models":["FXZQ20AVM","FXZQ32AVM","FXZQ50AVM"]},
+ {"id":"Z(BVM)","label":"Ceiling Mounted Cassette(Compact Multi Flow)","models":["FXZQ20BVM","FXZQ25BVM","FXZQ32BVM","FXZQ40BVM","FXZQ50BVM"]},
+ {"id":"FXFQ-B","label":"Ceiling Mounted Cassette","models":["FXFQ20BVEB","FXFQ25BVEB","FXFQ32BVEB","FXFQ40BVEB","FXFQ50BVEB","FXFQ63BVEB","FXFQ80BVEB","FXFQ100BVEB","FXFQ125BVEB","FXFQ140BVEB"]}
+];
+const modelsByCode=new Map();
+for(const family of families){
+ for(const code of family.models)modelsByCode.set(code,family.id);
+}
+el('family').replaceChildren(...families.map(f=>new Option(f.id+' - '+f.label,f.id)));
+function fillModels(){
+ const family=families.find(f=>f.id===el('family').value);
+ el('model').replaceChildren(...family.models.map(code=>new Option(code,code)));
+ el('model').add(new Option('Nhập mã FCU từ catalogue…','manual'));
+ el('customModel').value='';
+ syncCustom();
+}
+function syncCustom(){
+ const manual=el('model').value==='manual';
+ el('customField').hidden=!manual;el('customModel').disabled=!manual;el('customModel').required=manual;
+}
+function selectedModel(){return el('model').value==='manual'?el('customModel').value.trim().toUpperCase():el('model').value}
+el('family').onchange=fillModels;el('model').onchange=syncCustom;
+el('family').value='S-PA';fillModels();
+el('chooseOutdoor').onclick=()=>{
+ const selected=items.filter(x=>x[0]==='Dàn lạnh' && !excludedFromGroup.has(x));
+ if(!selected.length){el('outcome').textContent='Hãy thêm dàn lạnh và đánh dấu các dòng cần ghép vào cùng hệ.';return}
+ let index=0, capacity=0, count=0;
+ for(const [, , model, qty] of selected){
+  const family=modelsByCode.get(model.toUpperCase());
+  const size=Number(model.match(/^[A-Z]+(\d+)/i)?.[1]);
+  const found=family && [...manualModels,[71,8],[160,18],[200,22.4],[250,28],[400,45],[500,56]].find(([n])=>n===size);
+  if(!found){el('outcome').textContent='Model '+model+' chưa có dữ liệu công suất trong danh sách.';return}
+  const capacityIndex=found[0]===32 && family!=='FXFQ-B'?31.25:(found[0]===63?62.5:found[0]);
+  index+=capacityIndex*qty;capacity+=found[1]*qty;count+=qty;
+ }
+ const options=catalog.map(([hp,kw])=>({hp,kw,ratio:index/(25*hp)*100}));
+ const matches=options.filter(({ratio,kw})=>ratio>=50 && ratio<=130 && kw>=capacity);
+ const label=o=>'RXYQ'+o.hp+'U · '+o.kw+' kW · kết nối '+o.ratio.toFixed(1)+'%';
+ const summary=count+' dàn lạnh · tổng chỉ số '+index+' · tổng danh định '+capacity.toFixed(2)+' kW.';
+ let detail;
+ if(matches.length){
+  detail='Ứng viên nhỏ nhất theo bộ lọc danh định: '+label(matches[0])+'.';
+ }else if(options[0].ratio<50){
+  detail=label(options[0])+'. Mức tối thiểu trong bộ lọc là 50%; các mẫu lớn hơn có tỷ lệ thấp hơn.';
+ }else{
+  detail='Không có mẫu 8–20 HP đạt đồng thời tỷ lệ 50–130% và tổng công suất danh định.';
+ }
+ el('outcome').textContent=summary+' '+detail+' Chưa kiểm tra công suất thực tại điều kiện phòng, nhiệt độ ngoài trời, chiều dài ống và tổ hợp cho thị trường Việt Nam.';
+};
+
+
+// Paired dry/wet bulb rating points, Daikin EDFMT391737 section 8.1, Te Auto.
+const dryPoints=[20,23,26,27,28,30,32], wetPoints=[14,16,18,19,20,22,24];
+const coolingRows={
+20:[1.9,1.9,2.1,2,2.2,1.9,2.2,1.8,2.2,1.8,2.3,1.7,2.3,1.7],
+25:[2.5,2.2,2.6,2.2,2.8,2.3,2.8,2.2,2.8,2.1,2.9,2,3,2],
+32:[3.2,2.6,3.4,2.7,3.5,2.8,3.6,2.7,3.6,2.6,3.7,2.5,3.8,2.5],
+40:[4,3.5,4.2,3.8,4.4,4,4.5,3.7,4.6,3.6,4.7,3.4,4.8,3.4],
+50:[4.9,4.2,5.3,4.6,5.5,4.7,5.6,4.3,5.7,4.2,5.8,4.1,5.9,3.9],
+63:[6.3,5.3,6.7,5.7,7,5.9,7.1,5.4,7.2,5.4,7.3,5.2,7.5,5.1],
+80:[7.9,6.3,8.5,6.8,8.8,7.1,9,6.5,9.1,6.4,9.3,6.2,9.5,6],
+100:[9.9,8.2,10.5,8.9,11,9.2,11.2,8.5,11.3,8.4,11.6,8.1,11.8,7.9],
+125:[12.3,9.9,13.2,10.7,13.8,10.9,14,10.1,14.2,10,14.5,9.7,14.8,9.3],
+140:[14.1,11,15,11.8,15.7,12.4,16,11.6,16.2,11.4,16.5,11.1,16.9,10.6]};
+function satPressure(t){return 0.61121*Math.exp((18.678-t/234.5)*t/(257.14+t))}
+function wetBulb(dry,rh){
+ const vapor=satPressure(dry)*rh/100;
+ const ratio=.621945*vapor/(101.325-vapor);
+ let lo=0,hi=dry;
+ for(let i=0;i<40;i++){
+  const w=(lo+hi)/2,p=satPressure(w),ws=.621945*p/(101.325-p);
+  const target=((2501-2.326*w)*ws-1.006*(dry-w))/(2501+1.86*dry-4.186*w);
+  if(target<ratio)lo=w;else hi=w;
+ }
+ return (lo+hi)/2;
+}
+function indoorTcAtWB(row,wb){
+ if(!Number.isFinite(wb)||wb<wetPoints[0]||wb>wetPoints.at(-1))return null;
+ const i=wetPoints.findIndex(x=>x>=wb);
+ if(i===0)return row[0];
+ const f=(wb-wetPoints[i-1])/(wetPoints[i]-wetPoints[i-1]);
+ return row[2*i-2]+f*(row[2*i]-row[2*i-2]);
+}
+function indoorCoolingSum(units){
+ let total=0,count=0;
+ for(const [, ,model,qty,c] of units){
+  if(c?.cool===false)continue;
+  const row=coolingRows[/^FXSQ(\d+)PAVE$/.exec(model)?.[1]];
+  if(!row||!Number.isFinite(c?.dbt)||!Number.isFinite(c?.rh)||c.rh<1||c.rh>100)return null;
+  const tc=indoorTcAtWB(row,wetBulb(c.dbt,c.rh));if(tc===null)return null;
+  total+=tc*qty;count+=qty;
+ }
+ return count?total:null;
+}
+function capacityText(model,dry,rh){
+ const match=/^FXSQ(\d+)PAVE$/.exec(model),row=match&&coolingRows[match[1]];
+ if(!row)return 'Chưa có bảng hiệu suất cho model này.';
+ if(!Number.isFinite(dry)||!Number.isFinite(rh)||dry<15||dry>35||rh<1||rh>100)return 'Kiểm tra DBT và RH.';
+ const wb=wetBulb(dry,rh);
+ if(wb<0.01)return 'Ngoài phạm vi tra.';
+ const prefix='WB ≈ '+wb.toFixed(1)+' °C · ';
+ const idx=dryPoints.indexOf(dry);
+ if(idx<0||Math.abs(wetPoints[idx]-wb)>0.1){
+  const upper=wetPoints.findIndex(w=>w>=wb);
+  if(upper<1)return prefix+'Ngoài các điểm tra hỗ trợ.';
+
+  const estimate=indoorTcAtWB(row,wb);
+  return prefix+'TC tham khảo ≈ '+estimate.toFixed(2)+' kW (nội suy theo WB, Te Auto). Max TC và Max SC theo DIL Việt Nam chưa xác minh.';
+ }
+ return prefix+'TC '+row[2*idx].toFixed(1)+' kW · SHC '+row[2*idx+1].toFixed(1)+' kW (điểm bảng, sai lệch WB ≤ 0,1 °C).';
+}
+
+const defaults={dbt:24,rh:50,tc:0,sc:0,hdb:20,hc:0,cool:true,heat:true};
+let systems=['System 1'], assignments=new Map(), chosen=null, editing=null;
+const excludedFromGroup={has:item=>assignments.get(item)!==el('system').value};
+const meta=['project','client','ref','revision'];
+const resultBySystem=new Map();
+const headers=['Name','FCU','Tmp C','Rq TC','Max TC','Rq SC','Max SC','Tevap','Tdis C','Tmp H','Rq HC','Max HC','Tdis H','Airflow','Qty'];
+headers.forEach(t=>{const th=document.createElement('th');th.textContent=t;el('columns').append(th)});
+function cells(row,values){for(const value of values)row.insertCell().textContent=value??'—'}
+function selectRow(item){
+ chosen=item;el('edit').disabled=!item;el('del').disabled=!item;
+ for(const row of el('rows').rows)row.classList.toggle('selected',row.item===item);
+}
+function refreshReports(){
+ el('reportName').textContent=el('project').value||'Project report';
+ el('reportMeta').textContent=meta.slice(1).map(id=>el(id).value).filter(Boolean).join(' · ');
+ el('reportRows').replaceChildren();
+ for(const item of items){const c=item[4];cells(el('reportRows').insertRow(),[assignments.get(item)??'—',item[1],item[2],item[3],c&&c.cool!==false?c.dbt+' °C / '+c.rh+'%':'—',c?.cool!==false?c?.tc:null,c?.cool!==false?c?.sc:null])}
+ el('reportOutdoor').textContent=[...resultBySystem].map(([name,result])=>name+' · '+result).join('\n');
+ el('reportPipe').textContent=[el('plan').textContent,el('meters').textContent].filter(Boolean).join('\n');
+}
+function render(){
+ resultBySystem.clear();el('outcome').textContent='';el('result').textContent='';
+ el('rows').replaceChildren();el('groups').replaceChildren();
+ for(const item of items){
+  if(item[0]!=='Dàn lạnh')continue;
+  if(!assignments.has(item))assignments.set(item,null);
+  const row=el('rows').insertRow(), c=item[4], cool=c&&c.cool!==false,heat=c?.heat;
+  const text=cool?capacityText(item[2],c.dbt,c.rh):'';
+  const rated=/TC ([\d.]+) kW · SHC ([\d.]+) kW/.exec(text);
+  row.item=item;row.tabIndex=0;row.title=text;
+  cells(row,[item[1],item[2],cool?c.dbt:null,cool?c.tc:null,rated?.[1],cool?c.sc:null,rated?.[2],null,null,heat?c.hdb:null,heat?c.hc:null,null,null,null,item[3]]);
+  row.onclick=()=>selectRow(item);row.ondblclick=()=>openUnit(item);
+  row.onkeydown=e=>{if(e.key==='Enter')openUnit(item);if(e.key===' '){e.preventDefault();selectRow(item)}};
+  const group=el('groups').insertRow();cells(group,item.slice(1,4));
+  const pick=document.createElement('select');pick.setAttribute('aria-label','System · '+item[1]);
+  pick.add(new Option("Available indoor units",""));for(const name of systems)pick.add(new Option(name,name));
+  pick.value=assignments.get(item)??"";
+  pick.onchange=()=>{assignments.set(item,pick.value||null);resultBySystem.clear();el('outcome').textContent='';refreshReports()};
+  group.insertCell().append(pick);
+ }
+ selectRow(items.includes(chosen)?chosen:null);refreshReports();
+}
+function setSystems(names,active){
+ systems=names;el('system').replaceChildren();
+ for(const n of names)el('system').add(new Option(n,n));
+ el('system').value=active&&names.includes(active)?active:names[0];
+}
+function showTab(id){
+ document.querySelectorAll('.panel').forEach(s=>s.hidden=s.id!==id);
+ document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===id);b.setAttribute('aria-current',b.dataset.tab===id?'page':'false')});
+ el('status').textContent=({indoor:'Add VRV indoor units',outdoor:'Group indoor units and select an outdoor unit',piping:'Piping · VRV IV+ R410A',reports:'Project report'})[id];
+ if(id==='reports')refreshReports();if(id==='piping')drawPiping(el('system').value);
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function updateCriteria(){
+ for(const id of ['dbt','rh','tc','sc'])el(id).disabled=!el('cool').checked;
+ for(const id of ['hdb','hc'])el(id).disabled=!el('heat').checked;
+ el('capacityPreview').textContent=el('cool').checked?capacityText(selectedModel(),el('dbt').valueAsNumber,el('rh').valueAsNumber):'';
+}
+function openUnit(item=null){
+ 
+ editing=item;const c={...defaults,...item?.[4]};
+ el('entry').reset();
+ let num=1;while(items.some(i=>i[1]==='Ind '+num))num++;
+ el('zone').value=item?.[1]??'Ind '+num;
+ const code=item?.[2]??'FXSQ32PAVE';
+ const savedFamily=item?.[4]?.family;
+ el('family').value=families.some(f=>f.id===savedFamily)?savedFamily:(modelsByCode.get(code)??'S-PA');
+ fillModels();el('model').value=modelsByCode.get(code)===el('family').value?code:'manual';syncCustom();if(el('model').value==='manual')el('customModel').value=code;el('qty').value=item?.[3]??1;
+ for(const id of Object.keys(defaults)){if(typeof defaults[id]==='boolean')el(id).checked=c[id];else el(id).value=c[id]}
+ el('submitIndoor').textContent=item?'Apply':'Add';updateCriteria();el('indoorDialog').showModal();el('zone').focus();el('zone').select();
+}
+el('entry').oninput=updateCriteria;el('entry').onchange=updateCriteria;
+el('entry').onsubmit=e=>{
+ e.preventDefault();if(!el('cool').checked&&!el('heat').checked){alert('Chọn Cooling hoặc Heating.');return}
+ const c={};for(const id of Object.keys(defaults))c[id]=typeof defaults[id]==='boolean'?el(id).checked:(el(id).valueAsNumber||0);
+ if(c.cool&&c.sc>c.tc&&c.tc>0){alert('Rq SC vượt Rq TC.');return}
+ const model=selectedModel();
+ if(el('model').value==='manual' && modelsByCode.has(model) && modelsByCode.get(model)!==el('family').value){alert('Mã này thuộc Family '+modelsByCode.get(model));return}
+ c.family=el('family').value;
+ if(editing?.[4]?.pipeId)c.pipeId=editing[4].pipeId;
+ const item=editing??[];item.splice(0,item.length,'Dàn lạnh',el('zone').value.trim(),model,el('qty').valueAsNumber,c);
+ if(!editing)items.push(item);chosen=item;el('indoorDialog').close();render();
+};
+el('addIndoor').onclick=()=>openUnit();el('edit').onclick=()=>openUnit(chosen);
+el('del').onclick=()=>{if(chosen&&confirm('Xóa '+chosen[1]+'?')){assignments.delete(chosen);items.splice(items.indexOf(chosen),1);chosen=null;render()}};
+el('closeIndoor').onclick=el('xclose').onclick=()=>el('indoorDialog').close();
+el('newSystem').onclick=()=>{let i=systems.length+1;while(systems.includes('System '+i))i++;const n='System '+i;setSystems([...systems,n],n);render()};
+el('system').onchange=()=>el('outcome').textContent=resultBySystem.get(el('system').value)??'';
+const selectOutdoor=el('chooseOutdoor').onclick;
+el('chooseOutdoor').onclick=()=>{selectOutdoor();resultBySystem.set(el('system').value,el('outcome').textContent);refreshReports()};
+const ouConfigs=new Map();
+let draftUnits=new Set(),draftModel='',manualOU=false;
+const ivs=[['RXYMQ4AVE',100,6,11.2,12.5],['RXYMQ5BVM',125,8,14,14],['RXYMQ6BVM',150,9,16,16],['RXYMQ8AY1',200,13,22.4,25],['RXYMQ9AY1',215,14,24,26]];
+// Daikin VRV H standard AYM/AYMV: HP, cooling kW, heating kW, indoor limit, component HP.
+const hSpecs=[
+ [6,16,18,9],[8,22.4,25,13],[10,28,31.5,16],[12,33.5,37.5,19],[14,40,45,22],[16,45,50,26],[18,50,56,29],[20,56,63,32],
+ [22,61.5,69,35,12,10],[24,67,75,39,12,12],[26,73.5,82.5,42,14,12],[28,78.5,87.5,45,16,12],[30,83.5,93.5,48,18,12],[32,90,100,52,16,16],
+ [34,95,106,55,18,16],[36,101,113,58,20,16],[38,106,119,61,20,18],[40,112,126,64,20,20],[42,117,131,64,18,12,12],[44,123,138,64,20,12,12],
+ [46,130,145,64,16,16,14],[48,135,150,64,16,16,16],[50,140,156,64,18,16,16],[52,145,162,64,18,18,16],[54,150,168,64,18,18,18],
+ [56,156,175,64,20,18,18],[58,162,182,64,20,20,18],[60,168,189,64,20,20,20]
+];
+const hSeries=hSpecs.map(([hp,tc,hc,max,...modules])=>['RXYQ'+hp+(modules.length?'AYMV':'AYM'),hp*25,max,tc,hc,modules.map(n=>'RXYQ'+n+'AYM')]);
+const catalogueSeries = [
+["VRV R · REYQ-B","Thu hồi nhiệt",37,[
+["REYQ8BYM9",22.4,25],
+["REYQ10BYM9",28,31.5],
+["REYQ12BYM9",33.5,37.5],
+["REYQ14BYM9",40,45],
+["REYQ16BYM9",45,50],
+["REYQ18BYM9",50,56],
+["REYQ20BYM9",56,63],
+["REYQ22BYM9",61.5,69],
+["REYQ24BYM9",67,75],
+["REYQ26BYM9",73.5,82.5],
+["REYQ28BYM9",78.5,87.5],
+["REYQ30BYM9",83.5,93.5],
+["REYQ32BYM9",89.5,101],
+["REYQ34BYM9",96,108],
+["REYQ36BYM9",101,113],
+["REYQ38BYM9",106,119],
+["REYQ40BYM9",112,126],
+["REYQ42BYM9",117,131],
+["REYQ44BYM9",123,138],
+["REYQ46BYM9",129,144],
+["REYQ48BYM9",134,150],
+["REYQ50BYM9",140,157],
+["REYQ52BYM9",146,164],
+["REYQ54BYM9",152,171],
+["REYQ56BYM9",157,176],
+["REYQ58BYM9",162,182],
+["REYQ60BYM9",168,189]
+]],
+["VRV H · RXYQ-B","Hai chiều lạnh/sưởi",55,[
+["RXYQ8BYM",22.4,25],
+["RXYQ10BYM",28,31.5],
+["RXYQ12BYM",33.5,37.5],
+["RXYQ14BYM",40,45],
+["RXYQ16BYM",45,50],
+["RXYQ18BYM",50,56],
+["RXYQ20BYM",56,63],
+["RXYQ22BYM",61.5,69],
+["RXYQ24BYM",67,75],
+["RXYQ26BYM",73.5,82.5],
+["RXYQ28BYM",78.5,87.5],
+["RXYQ30BYM",83.5,93.5],
+["RXYQ32BYM",89.5,100],
+["RXYQ34BYM",96,108],
+["RXYQ36BYM",101,113],
+["RXYQ38BYM",106,119],
+["RXYQ40BYM",112,126],
+["RXYQ42BYM",117,132],
+["RXYQ44BYM",123,138],
+["RXYQ46BYM",128,144],
+["RXYQ48BYM",134,150],
+["RXYQ50BYM",139,156],
+["RXYQ52BYM",145,163],
+["RXYQ54BYM",152,171],
+["RXYQ56BYM",157,176],
+["RXYQ58BYM",162,182],
+["RXYQ60BYM",168,189]
+]],
+["VRV 6 X · RXUQ-B","Một chiều lạnh",75,[
+["RXUQ6BYM",16],
+["RXUQ8BYM",22.4],
+["RXUQ10BYM",28],
+["RXUQ12BYM",33.5],
+["RXUQ14BYM",40],
+["RXUQ16BYM",45],
+["RXUQ18BYM",50],
+["RXUQ20BYM",56],
+["RXUQ22BYM",61.5],
+["RXUQ24BYM",67],
+["RXUQ26BYM",73.5],
+["RXUQ28BYM",78.5],
+["RXUQ30BYM",83.5],
+["RXUQ32BYM",89.5],
+["RXUQ34BYM",96],
+["RXUQ36BYM",101],
+["RXUQ38BYM",106],
+["RXUQ40BYM",112],
+["RXUQ42BYM",117],
+["RXUQ44BYM",123],
+["RXUQ46BYM",129],
+["RXUQ48BYM",134],
+["RXUQ50BYM",139],
+["RXUQ52BYM",145],
+["RXUQ54BYM",152],
+["RXUQ56BYM",157],
+["RXUQ58BYM",162],
+["RXUQ60BYM",168]
+]],
+["VRV 6 A · RXQ-B","Một chiều lạnh",93,[
+["RXQ8BYM",22.4],
+["RXQ10BYM",28],
+["RXQ12BYM",33.5],
+["RXQ14BYM",40],
+["RXQ16BYM",45],
+["RXQ18BYM",50],
+["RXQ20BYM",56],
+["RXQ22BYM",61.5],
+["RXQ24BYM",67],
+["RXQ26BYM",73],
+["RXQ28BYM",78.5],
+["RXQ30BYM",83.5],
+["RXQ32BYM",89.5],
+["RXQ34BYM",95],
+["RXQ36BYM",100],
+["RXQ38BYM",106],
+["RXQ40BYM",112],
+["RXQ42BYM",117],
+["RXQ44BYM",123],
+["RXQ46BYM",129],
+["RXQ48BYM",134],
+["RXQ50BYM",140],
+["RXQ52BYM",146],
+["RXQ54BYM",150],
+["RXQ56BYM",156],
+["RXQ58BYM",162],
+["RXQ60BYM",168],
+["RXQ62BYM",173],
+["RXQ64BYM",179],
+["RXQ66BYM",185],
+["RXQ68BYM",190],
+["RXQ70BYM",196],
+["RXQ72BYM",202],
+["RXQ74BYM",207],
+["RXQ76BYM",213],
+["RXQ78BYM",219]
+]],
+["VRV X MAX · RXUQ-AW","Một chiều lạnh",111,[
+["RXUQ6AYMW",16],
+["RXUQ8AYMW",22.4],
+["RXUQ10AYMW",28],
+["RXUQ12AMYMW",32],
+["RXUQ12AYMW",33.5],
+["RXUQ14AMYMW",38.4],
+["RXUQ14AYMW",40],
+["RXUQ16AMYMW",44.8],
+["RXUQ16AYMW",45],
+["RXUQ18AM1YM",48],
+["RXUQ18AMYMW",50.4],
+["RXUQ18AYMW",50],
+["RXUQ20AM1YM",54.4],
+["RXUQ20AMYMW",55.9],
+["RXUQ20AYMW",56],
+["RXUQ22AMYMW",61.5],
+["RXUQ24AMYMW",67],
+["RXUQ26AMYMW",73.5],
+["RXUQ28AMYMW",78.5],
+["RXUQ30AMYMW",83.5],
+["RXUQ32AMYMW",89.5],
+["RXUQ34AMYMW",96],
+["RXUQ36AMYMW",101],
+["RXUQ38AMYMW",106],
+["RXUQ40AMYMW",112],
+["RXUQ42AMYMW",117],
+["RXUQ44AMYMW",123],
+["RXUQ46AMYMW",130],
+["RXUQ48AMYMW",135],
+["RXUQ50AMYMW",140],
+["RXUQ52AMYMW",146],
+["RXUQ54AMYMW",152],
+["RXUQ56AMYMW",157],
+["RXUQ58AMYMW",162],
+["RXUQ60AMYMW",168]
+]],
+["VRV A MAX · RXQ-AW","Một chiều lạnh",113,[
+["RXQ6AYMW",16],
+["RXQ8AYMW",22.4],
+["RXQ10AYMW",28],
+["RXQ12AYMW",33.5],
+["RXQ14AYMW",40],
+["RXQ16AYMW",45],
+["RXQ18AMYMW",50.4],
+["RXQ18AYMW",50],
+["RXQ20AMYMW",55.9],
+["RXQ20AYMW",56],
+["RXQ22AMYMW",61.5],
+["RXQ24AMYMW",67],
+["RXQ26AMYMW",73.5],
+["RXQ28AMYMW",78.5],
+["RXQ30AMYMW",83.5],
+["RXQ32AMYMW",90],
+["RXQ34AMYMW",95],
+["RXQ36AMYMW",100],
+["RXQ38AMYMW",106],
+["RXQ40AMYMW",112],
+["RXQ42AMYMW",117],
+["RXQ44AMYMW",123],
+["RXQ46AMYMW",130],
+["RXQ48AMYMW",135],
+["RXQ50AMYMW",140],
+["RXQ52AMYMW",145],
+["RXQ54AMYMW",150],
+["RXQ56AMYMW",156],
+["RXQ58AMYMW",162],
+["RXQ60AMYMW",168]
+]],
+["VRV S High Efficiency · RSUQ-A","Một chiều lạnh",125,[
+["RSUQ4AVM",11.2],
+["RSUQ5AVM",14],
+["RSUQ6AVM",16],
+["RSUQ7AYM",20],
+["RSUQ8AYM",22.4],
+["RSUQ9AYM",24]
+]],
+["VRV S High Efficiency · RSUYQ-A","Hai chiều lạnh/sưởi",126,[
+["RSUYQ4AVM",11.2,12.5],
+["RSUYQ5AVM",14,16],
+["RSUYQ6AVM",16,18],
+["RSUYQ7AYM",20,22.4],
+["RSUYQ8AYM",22.4,25]
+]],
+["VRV IV S · RXMQ","Một chiều lạnh",133,[
+["RXMQ4AVE",11.2],
+["RXMQ5BVM",14],
+["RXMQ6BVM",16],
+["RXMQ8AY1",22.4],
+["RXMQ9AY1",24]
+]],
+["VRV IV Q · RQQ-T","Một chiều lạnh",145,[
+["RQQ6TYM",16],
+["RQQ8TYM",22.4],
+["RQQ10TYM",28],
+["RQQ12TYM",33.5],
+["RQQ14TYM",40],
+["RQQ16TYM",45],
+["RQQ18TNYM",50.4],
+["RQQ18TYM",50],
+["RQQ20TNYM",55.9],
+["RQQ20TYM",56],
+["RQQ22TNYM",61.5],
+["RQQ24TNYM",67],
+["RQQ26TNYM",73.5],
+["RQQ28TNYM",78.5],
+["RQQ30TNYM",85],
+["RQQ30TSYM",83.5],
+["RQQ32TNYM",90],
+["RQQ32TSYM",89.5],
+["RQQ34TNYM",95],
+["RQQ34TSYM",95],
+["RQQ36TNYM",101],
+["RQQ36TSYM",100],
+["RQQ38TNYM",106],
+["RQQ38TSYM",106],
+["RQQ40TNYM",112],
+["RQQ40TSYM",112],
+["RQQ42TNYM",119],
+["RQQ42TSYM",117],
+["RQQ44TNYM",124],
+["RQQ44TSYM",123],
+["RQQ46TNYM",130],
+["RQQ46TSYM",129],
+["RQQ48TNYM",135],
+["RQQ48TSYM",134]
+]],
+["VRV IV Q · RQYQ-T","Hai chiều lạnh/sưởi",147,[
+["RQYQ6TY1",16,18],
+["RQYQ8TY1",22.4,25],
+["RQYQ10TY1",28,31.5],
+["RQYQ12TY1",33.5,37.5],
+["RQYQ14TY1",40,45],
+["RQYQ16TY1",45,50],
+["RQYQ18TNY1",50.4,56.5],
+["RQYQ18TY1",50,56],
+["RQYQ20TNY1",55.9,62.5],
+["RQYQ20TY1",56,63],
+["RQYQ22TNY1",61.5,69],
+["RQYQ24TNY1",67,75],
+["RQYQ26TNY1",73.5,82.5],
+["RQYQ28TNY1",78.5,87.5],
+["RQYQ30TNY1",85,95],
+["RQYQ30TSY1",83.5,93.5],
+["RQYQ32TNY1",90,101],
+["RQYQ32TSY1",89.5,101],
+["RQYQ34TNY1",95,107],
+["RQYQ34TSY1",95,106],
+["RQYQ36TNY1",101,113],
+["RQYQ36TSY1",100,112],
+["RQYQ38TNY1",106,119],
+["RQYQ38TSY1",106,119],
+["RQYQ40TNY1",112,125],
+["RQYQ40TSY1",112,126],
+["RQYQ42TNY1",119,133],
+["RQYQ42TSY1",117,131],
+["RQYQ44TNY1",124,138],
+["RQYQ44TSY1",123,138],
+["RQYQ46TNY1",130,146],
+["RQYQ46TSY1",129,144],
+["RQYQ48TNY1",135,151],
+["RQYQ48TSY1",134,150]
+]],
+["VRV IV W · RWEYQ-T","Giải nhiệt nước",161,[
+["RWEYQ6TYM",16,18],
+["RWEYQ8TYM",22.4,25],
+["RWEYQ10TYM",28,31.5],
+["RWEYQ12TYM",33.5,37.5],
+["RWEYQ14TYM",38.4,43],
+["RWEYQ16TYM",44.8,50],
+["RWEYQ18TYM",50.4,56.5],
+["RWEYQ20TYM",56,63],
+["RWEYQ22TYM",61.5,69],
+["RWEYQ24TYM",67,75],
+["RWEYQ26TYM",72.8,81.5],
+["RWEYQ28TYM",78.4,88],
+["RWEYQ30TYM",84,94.5],
+["RWEYQ32TYM",89.5,101],
+["RWEYQ34TYM",95,107],
+["RWEYQ36TYM",101,113]
+]],
+["VRV IV Hot Water · RWHQ-T / HWHQ30A","Thu hồi nhiệt cấp nước nóng",169,[
+["RWHQ6TYM",16],
+["RWHQ8TYM",22.4],
+["RWHQ10TYM",28],
+["RWHQ12THYM",32],
+["RWHQ12TYM",33.5],
+["RWHQ14THYM",38.4],
+["RWHQ14TYM",40],
+["RWHQ16THYM",44.8],
+["RWHQ16TYM",45],
+["RWHQ18THYM",48],
+["RWHQ18TNYM",50.4],
+["RWHQ18TYM",50],
+["RWHQ20THYM",54.4],
+["RWHQ20TNYM",55.9],
+["RWHQ20TYM",56],
+["RWHQ22THYM",60.8],
+["RWHQ22TNYM",62.4],
+["RWHQ22TSYM",61.5],
+["RWHQ24THYM",67.2],
+["RWHQ24TNYM",68],
+["RWHQ24TSYM",67],
+["RWHQ26THYM",72.8],
+["RWHQ26TNYM",73.5],
+["RWHQ26TSYM",72.4],
+["RWHQ28THYM",78.3],
+["RWHQ28TNYM",80],
+["RWHQ28TSYM",78.5],
+["RWHQ30THYM",83.9],
+["RWHQ30TNYM",85],
+["RWHQ30TSYM",83.5],
+["RWHQ32THYM",89.4],
+["RWHQ32TNYM",90],
+["RWHQ32TSYM",89.5],
+["RWHQ34THYM",95.9],
+["RWHQ34TNYM",95],
+["RWHQ34TSYM",95],
+["RWHQ36THYM",102],
+["RWHQ36TNYM",101],
+["RWHQ36TSYM",100],
+["RWHQ38THYM",107],
+["RWHQ38TNYM",106],
+["RWHQ38TSYM",106],
+["RWHQ40THYM",114],
+["RWHQ40TNYM",112],
+["RWHQ40TSYM",112],
+["RWHQ42THYM",120],
+["RWHQ42TNYM",119],
+["RWHQ42TSYM",117],
+["RWHQ44THYM",125],
+["RWHQ44TNYM",124],
+["RWHQ44TSYM",123],
+["RWHQ46THYM",130],
+["RWHQ46TNYM",130],
+["RWHQ46TSYM",129],
+["RWHQ48THYM",135],
+["RWHQ48TNYM",135],
+["RWHQ48TSYM",134],
+["RWHQ50THYM",140],
+["RWHQ50TNYM",140],
+["RWHQ50TSYM",140],
+["RWHQ52TNYM",145],
+["RWHQ54TNYM",150],
+["RWHQ56TNYM",156],
+["RWHQ58TNYM",162],
+["RWHQ60TNYM",168]
+]]
+];
+const seriesMap=new Map([
+ ['VRV H STD(VN)',{family:'Hai chiều lạnh/sưởi',rows:hSeries}],
+ ['VRV IV S',{family:'Hai chiều lạnh/sưởi',rows:ivs}]
+]);
+for(const [name,family,page,models] of catalogueSeries){
+ const rows=models.map(([model,tc,hc])=>{
+  const hp=Number(model.match(/\d+/)[0]);
+  const small=/^(?:RSU|RXMQ)/.test(model);
+  const index=small&&hp===9?215:hp*25;
+  const max=small?({4:6,5:8,6:9,7:11,8:13,9:14})[hp]:({6:9,8:13,10:16,12:19,14:22,16:26,18:29,20:32,22:35,24:39,26:42,28:45,30:48,32:52,34:55,36:58,38:61})[hp]??64;
+  return [model,index,max,tc,hc??null];
+ });
+ seriesMap.set(name,{family,page,rows});
+}
+for(const family of new Set([...seriesMap.values()].map(s=>s.family)))el('ouFamily').add(new Option(family,family));
+for(const [name,s] of seriesMap)el('ouSeries').add(new Option(name,name));
+el('ouFamily').onchange=()=>{el('ouSeries').value=[...seriesMap].find(([,s])=>s.family===el('ouFamily').value)[0];paintOU()};
+function preferredOU(options,t,series){
+ if(series!=='VRV IV S')return options.find(r=>r[1]>=t.ci)??options.at(-1);
+ return options[0];
+}
+const ouDefaults={ouSeries:'VRV H STD(VN)',ouName:'Out 1',ouLimit:130,ouC:32,ouCP:100,ouH:0,ouRH:50,ouHP:100};
+function ivsTotals(units){
+ let ci=0,cc=0,hc=0,count=0,known=true,cLoad=true,hLoad=true;
+ for(const row of units){
+  const [, , model,qty,c]=row, size=Number(model.match(/^[A-Z]+(\d+)/)?.[1]);
+  if(!modelsByCode.has(model))known=false;
+  ci+=((size===32&&modelsByCode.get(model)!=='FXFQ-B')?31.25:size===63?62.5:size)*qty;count+=qty;
+  if(c?.cool!==false){if(!(c?.tc>0))cLoad=false;else cc+=qty*c.tc}
+  if(c?.heat!==false){if(!(c?.hc>0))hLoad=false;else hc+=qty*c.hc}
+ }
+ return {ci,cc,hc,count,known,cLoad,hLoad};
+}
+function ouChoiceRows(t,limit,cp,hp,series='VRV IV S'){
+ if(!t.count||!t.known)return [];
+ return (seriesMap.get(series)?.rows??[]).filter(([,index,max,tc,hc])=>t.count<=max&&t.ci>=index*.5&&t.ci<=index*limit/100&&(!t.cLoad||tc>=t.cc*cp/100)&&(hc===null?t.hc*hp===0:!t.hLoad||hc>=t.hc*hp/100));
+}
+function paintOU(){
+ const system=el('system').value;
+ for(const id of ['available','attached'])el(id).replaceChildren();
+ items.forEach((row,i)=>{if(row[0]!=='Dàn lạnh')return;
+ const assigned=assignments.get(row);if(assigned&&assigned!==system)return;
+ el(draftUnits.has(row)?'attached':'available').add(new Option(row[1]+' ['+row[2]+']'+(row[3]>1?' × '+row[3]:''),i))});
+ el('rootName').textContent=el('ouName').value;
+ const t=ivsTotals(draftUnits),cp=+el('ouCP').value,hp=+el('ouHP').value;
+ const load=(known,k,p)=>known?k.toFixed(1)+' kW → '+(k*p/100).toFixed(1)+' kW':'thiếu tải phòng';
+ el('ouTotals').textContent='Σ indoor req CC · '+load(t.cLoad,t.cc,cp)+'\nΣ indoor req HC · '+load(t.hLoad,t.hc,hp)+'\nΣ indoor CI · '+(t.known?t.ci:'chưa rõ');
+ const indoorSum=indoorCoolingSum(draftUnits);
+ if(indoorSum!==null)el('ouTotals').textContent+='\nΣ TC dàn lạnh (tham khảo, Te Auto) · '+indoorSum.toFixed(1)+' kW';
+ const series=el('ouSeries').value;el('ouTe').textContent=series==='VRV IV S'?'6.0 °C (default)':'Auto (default)';
+ const info=seriesMap.get(series);el('ouFamily').value=info.family;
+ el('ouSource').hidden=!info.page;if(info.page)el('ouSource').href='https://www.daikincatalog.com/library/books/dav_0006/book/data/all_page.pdf#page='+(info.page+1);
+ if(info.page)el('ouTe').textContent='Theo model';
+ const options=ouChoiceRows(t,+el('ouLimit').value,cp,hp,series);
+ if(!options.some(x=>x[0]===draftModel))manualOU=false;
+ if(!manualOU)draftModel=preferredOU(options,t,series)?.[0]??'';
+ el('ouOptions').replaceChildren();
+ for(const [model,index,,tc,hc] of options){const row=el('ouOptions').insertRow(),radio=document.createElement('input'),label=document.createElement('label');radio.type='radio';radio.name='ouCandidate';radio.checked=model===draftModel;radio.onchange=()=>{manualOU=true;draftModel=model};label.append(radio,model+' · '+model.match(/\d+/)[0]+' HP');row.insertCell().append(label);cells(row,[(100*t.ci/index).toFixed(1),tc,hc])}
+ el('ouNote').textContent=(t.count?(options.length?'':'Không có ứng viên trong bộ lọc. '):'Chọn dàn lạnh để ghép hệ. ')+'Lọc theo chỉ số, số dàn và tải đã nhập. Chọn sơ bộ theo công suất danh định. TC khả dụng của hệ tại điều kiện thiết kế cần bảng hiệu suất dàn nóng và hệ số đường ống của đúng model.';
+ if(info.page)el('ouNote').textContent+=' Cần kiểm tra tương thích FCU và phụ kiện theo series.';
+ if(info.page&&info.rows.every(r=>r[4]===null)&&t.hc*hp>0)el('ouNote').textContent+=' Dòng này chỉ cấp lạnh cho phòng, hệ đang yêu cầu sưởi.';
+}
+function openOU(){
+ const key=el('system').value,saved=ouConfigs.get(key)??{};
+ for(const [id,v] of Object.entries(ouDefaults))el(id).value=saved[id]??(id==='ouName'?'Out '+(systems.indexOf(key)+1):v);
+ manualOU=saved.manualOU===true;draftModel=saved.model??'';draftUnits=new Set(items.filter(row=>row[0]==='Dàn lạnh'&&assignments.get(row)===key));paintOU();el('ouDialog').showModal();
+}
+function moveOU(add){for(const opt of el(add?'available':'attached').selectedOptions){const row=items[+opt.value];if(add)draftUnits.add(row);else draftUnits.delete(row)}paintOU()}
+el('ouEdit').onclick=openOU;el('attach').onclick=el('available').ondblclick=()=>moveOU(true);el('detach').onclick=el('attached').ondblclick=()=>moveOU(false);
+for(const id of Object.keys(ouDefaults))el(id).oninput=paintOU;
+el('ouCancel').onclick=el('ouClose').onclick=()=>el('ouDialog').close();
+el('ouForm').onsubmit=e=>{e.preventDefault();const key=el('system').value,cfg={...ouConfigs.get(key),model:draftModel,manualOU};
+ for(const id of Object.keys(ouDefaults))cfg[id]=el(id).value;
+ for(const row of items){if(assignments.get(row)===key)assignments.set(row,null);if(draftUnits.has(row))assignments.set(row,key)}
+ ouConfigs.set(key,cfg);el('ouDialog').close();render();
+ const t=ivsTotals(draftUnits),summary=cfg.ouName+' · '+cfg.ouSeries+' · '+(draftModel||'Chưa chọn được model')+' · '+t.count+' dàn · CI '+(t.known?t.ci:'—')+' · chọn sơ bộ';
+ resultBySystem.set(key,summary);el('outcome').textContent=summary;refreshReports();if(cfg.model){showTab('piping');drawPiping(key)}
+};
+// Standard two-pipe R410A layout. Dimensions are outside diameters in mm, liquid × gas.
+const mainGasByModel={RXYMQ4AVE:15.9,RXYMQ5BVM:15.9,RXYMQ6BVM:19.1,RXYMQ8AY1:19.1,RXYMQ9AY1:22.2,RXYQ8AYM:19.1,RXYQ10AYM:22.2};
+function indoorPort(model,size){
+ if(model.startsWith('FXBQ'))return '6.4×12.7';
+ if(model.startsWith('FXBPQ'))return '9.5×15.9';
+ if(model.startsWith('FXVQ')){
+  return ({125:'9.5×15.9',200:'9.5×19.1',250:'9.5×22.2',400:'12.7×28.6',500:'15.9×28.6'})[size];
+ }
+ if(size<=140)return size<=50?'6.4×12.7':'9.5×15.9';
+ if(size===200)return '9.5×19.1';
+ if(size===250)return '9.5×22.2';
+ return null;
+}
+// Daikin Vietnam DAV_0006, outdoor unit combinations, printed pages 35, 53, 73 and 91.
+const moduleHpByModel={
+ "REYQ8BYM9":[8],
+ "REYQ10BYM9":[10],
+ "REYQ12BYM9":[12],
+ "REYQ14BYM9":[14],
+ "REYQ16BYM9":[16],
+ "REYQ18BYM9":[18],
+ "REYQ20BYM9":[20],
+ "REYQ22BYM9":[22],
+ "REYQ24BYM9":[24],
+ "REYQ26BYM9":[12,14],
+ "REYQ28BYM9":[12,16],
+ "REYQ30BYM9":[12,18],
+ "REYQ32BYM9":[12,20],
+ "REYQ34BYM9":[14,20],
+ "REYQ36BYM9":[16,20],
+ "REYQ38BYM9":[18,20],
+ "REYQ40BYM9":[20,20],
+ "REYQ42BYM9":[18,24],
+ "REYQ44BYM9":[20,24],
+ "REYQ46BYM9":[22,24],
+ "REYQ48BYM9":[24,24],
+ "REYQ50BYM9":[12,18,20],
+ "REYQ52BYM9":[12,20,20],
+ "REYQ54BYM9":[14,20,20],
+ "REYQ56BYM9":[16,20,20],
+ "REYQ58BYM9":[18,20,20],
+ "REYQ60BYM9":[20,20,20],
+ "RXYQ8BYM":[8],
+ "RXYQ10BYM":[10],
+ "RXYQ12BYM":[12],
+ "RXYQ14BYM":[14],
+ "RXYQ16BYM":[16],
+ "RXYQ18BYM":[18],
+ "RXYQ20BYM":[20],
+ "RXYQ22BYM":[22],
+ "RXYQ24BYM":[24],
+ "RXYQ26BYM":[12,14],
+ "RXYQ28BYM":[12,16],
+ "RXYQ30BYM":[12,18],
+ "RXYQ32BYM":[12,20],
+ "RXYQ34BYM":[14,20],
+ "RXYQ36BYM":[16,20],
+ "RXYQ38BYM":[18,20],
+ "RXYQ40BYM":[20,20],
+ "RXYQ42BYM":[18,24],
+ "RXYQ44BYM":[20,24],
+ "RXYQ46BYM":[22,24],
+ "RXYQ48BYM":[24,24],
+ "RXYQ50BYM":[12,18,20],
+ "RXYQ52BYM":[12,20,20],
+ "RXYQ54BYM":[14,20,20],
+ "RXYQ56BYM":[16,20,20],
+ "RXYQ58BYM":[18,20,20],
+ "RXYQ60BYM":[20,20,20],
+ "RXUQ6BYM":[6],
+ "RXUQ8BYM":[8],
+ "RXUQ10BYM":[10],
+ "RXUQ12BYM":[12],
+ "RXUQ14BYM":[14],
+ "RXUQ16BYM":[16],
+ "RXUQ18BYM":[18],
+ "RXUQ20BYM":[20],
+ "RXUQ22BYM":[10,12],
+ "RXUQ24BYM":[12,12],
+ "RXUQ26BYM":[12,14],
+ "RXUQ28BYM":[12,16],
+ "RXUQ30BYM":[12,18],
+ "RXUQ32BYM":[12,20],
+ "RXUQ34BYM":[14,20],
+ "RXUQ36BYM":[16,20],
+ "RXUQ38BYM":[18,20],
+ "RXUQ40BYM":[20,20],
+ "RXUQ42BYM":[12,12,18],
+ "RXUQ44BYM":[12,12,20],
+ "RXUQ46BYM":[12,14,20],
+ "RXUQ48BYM":[12,16,20],
+ "RXUQ50BYM":[12,18,20],
+ "RXUQ52BYM":[12,20,20],
+ "RXUQ54BYM":[14,20,20],
+ "RXUQ56BYM":[16,20,20],
+ "RXUQ58BYM":[18,20,20],
+ "RXUQ60BYM":[20,20,20],
+ "RXQ8BYM":[8],
+ "RXQ10BYM":[10],
+ "RXQ12BYM":[12],
+ "RXQ14BYM":[14],
+ "RXQ16BYM":[16],
+ "RXQ18BYM":[18],
+ "RXQ20BYM":[20],
+ "RXQ22BYM":[22],
+ "RXQ24BYM":[24],
+ "RXQ26BYM":[26],
+ "RXQ28BYM":[12,16],
+ "RXQ30BYM":[12,18],
+ "RXQ32BYM":[12,20],
+ "RXQ34BYM":[16,18],
+ "RXQ36BYM":[18,18],
+ "RXQ38BYM":[18,20],
+ "RXQ40BYM":[20,20],
+ "RXQ42BYM":[18,24],
+ "RXQ44BYM":[18,26],
+ "RXQ46BYM":[20,26],
+ "RXQ48BYM":[22,26],
+ "RXQ50BYM":[24,26],
+ "RXQ52BYM":[26,26],
+ "RXQ54BYM":[18,18,18],
+ "RXQ56BYM":[18,18,20],
+ "RXQ58BYM":[18,20,20],
+ "RXQ60BYM":[20,20,20],
+ "RXQ62BYM":[20,20,22],
+ "RXQ64BYM":[20,20,24],
+ "RXQ66BYM":[20,20,26],
+ "RXQ68BYM":[20,22,26],
+ "RXQ70BYM":[20,24,26],
+ "RXQ72BYM":[20,26,26],
+ "RXQ74BYM":[22,26,26],
+ "RXQ76BYM":[24,26,26],
+ "RXQ78BYM":[26,26,26]
+};
+function hasBymPiping(model){return /^RX(?:YQ|UQ|Q)\d+BYM$/.test(model)}
+function bymPipe(hp){
+ if(hp<=10)return hp<=8?'9.5×19.1':'9.5×22.2';
+ if(hp<=16)return '12.7×28.6';
+ if(hp<=22)return '15.9×28.6';
+ if(hp===24)return '15.9×34.9';
+ if(hp>72)return '22.2×41.3';
+ return hp<=34?'19.1×34.9':'19.1×41.3';
+}
+function chainPipes(model,units,style='tight'){
+ const hp=Number(model.match(/\d+/)[0]);
+ const isBYM=hasBymPiping(model);
+ const main=isBYM?bymPipe(hp):model.startsWith('RXYMQ')?'9.5×'+mainGasByModel[model]:hp<=8?'9.5×19.1':hp===10?'9.5×22.2':hp<=16?'12.7×28.6':hp<=22?'15.9×28.6':hp===28?'19.1×34.9':null;
+ const gas=main?Number(main.split('×')[1]):null,parts=new Array(units.length);
+ let downstream=0;
+ for(let i=units.length-1;i>=0;i--){
+  const code=units[i].model,size=Number(code.match(/^[A-Z]+(\d+)/)?.[1]);
+  const ci=size===63?62.5:size===32&&modelsByCode.get(code)!=='FXFQ-B'?31.25:size;
+  downstream+=ci;
+  const last=i===units.length-1;
+  const port=indoorPort(code,size);
+  const branchGas=downstream<150?15.9:downstream<200?19.1:22.2;
+  const between=downstream>=920?(isBYM?'19.1×41.3':null):downstream>=640?'19.1×34.9':downstream>=420?'15.9×28.6':downstream>=290?'12.7×28.6':'9.5×'+branchGas;
+  const trunk=i===0?main:last?port:between&&gas?[Math.min(Number(main.split('×')[0]),Number(between.split('×')[0])),Math.min(gas,Number(between.split('×')[1]))].join('×'):null;
+  const joint=last?null:downstream<290?'BHRG26A33T':downstream<640?'BHRG26A72T':'BHRG26A73T';
+  let kit=joint;
+  if(isBYM&&!last){
+   const grade=i===0?(hp<=10?33:hp<=22?72:73):(downstream<200?22:downstream<290?33:downstream<640?72:73);
+   kit=style==='brazed'?'KHRP26A'+grade+'T':'BHRG26A'+Math.max(grade,33)+(model.startsWith('RXQ')?'T':'T8');
+  }
+  parts[i]={ci:downstream,trunk,port,joint:kit};
+ }
+ return parts;
+}
+// Port cutting diameters (liquid, gas) from Daikin 3P703968-1B, page 1.
+const refnetEnds={
+ BHRG26A33T:[[[9.5,12.7],[15.9,19.1,22.2]],[[6.4,9.5],[15.9,19.1,22.2]],[[6.4,9.5],[12.7,15.9,19.1]]],
+ BHRG26A72T:[[[12.7,15.9,19.1],[28.6,34.9,38.1]],[[9.5,12.7,15.9],[15.9,22.2,28.6]],[[6.4,9.5,12.7],[15.9,22.2,28.6]]]
+};
+const fittingCodes={6.4:'06',9.5:'09',12.7:'12',15.9:'15',19.1:'19',22.2:'22',28.6:'28'};
+const reducerCodes={'6.4/9.5':'SDGTB0906','9.5/12.7':'SDGTB1209','12.7/15.9':'SDGTB1512','15.9/19.1':'SDGTB1915','19.1/22.2':'SDGTB2219','22.2/25.4':'SDGTB2522','25.4/28.6':'SDGTB2825','28.6/34.9':'SDGTB3428'};
+function tightFit(d,ports){
+ if(ports.includes(d)&&fittingCodes[d])return {code:'SDGTB'+fittingCodes[d],cut:d,rank:0};
+ for(const cut of ports){const pair=[d,cut].sort((a,b)=>a-b).join('/');if(reducerCodes[pair])return {code:reducerCodes[pair],cut,rank:1}}
+ return {code:'Tra phụ kiện',cut:null,rank:10};
+}
+function jointSchedule(part,next){
+ const ports=refnetEnds[part.joint];if(!ports)return [];
+ const needs=[part.trunk,next.trunk,part.port];
+ function arrangement(order){
+  return needs.flatMap((size,k)=>['Lỏng','Gas'].map((side,j)=>{
+   const d=Number(size?.split('×')[j]),port=order[k];
+   return {end:['Vào','Ra tuyến','Ra dàn'][k],side,port,diam:d,...tightFit(d,ports[port][j])}
+  }));
+ }
+ const a=arrangement([0,1,2]),b=arrangement([0,2,1]);
+ const score=xs=>xs.reduce((n,x)=>n+x.rank,0);
+ return score(a)<=score(b)?a:b;
+}
+function pipeLayout(units,lengths){
+ const edges=[],routes=[];let common=[],previous='OU';
+ const edge=(from,to,name)=>{const key=from+'>'+to,reading=lengths[key];const e={key,name,reading};edges.push(e);return e};
+ for(const [i,u] of units.entries()){
+  const joint='J'+u.id,terminal='U'+u.id;
+  if(i<units.length-1){const trunk=edge(previous,joint,i===0?'Ống chính':'Trục tới J'+(i+1));common=[...common,trunk];previous=joint}
+  const tail=edge(previous,terminal,'Tới '+u.name);routes.push([...common,tail]);
+ }
+ return {edges,routes};
+}
+function routingReport(layout,cfg){
+ const {routes,edges}=layout;
+ const valid=v=>Number.isFinite(v)&&v>=0;
+ const all=edges.every(e=>e.reading?.real>0);
+ const eqKnown=all&&edges.every(e=>valid(e.reading.extra));
+ const sum=(r,which)=>r.reduce((n,e)=>n+(e.reading?.real||0)+(which==='eq'&&valid(e.reading?.extra)?e.reading.extra:0),0);
+ const longest=(fn)=>Math.max(0,...routes.map(fn));
+ const eq=longest(r=>sum(r,'eq')),actual=longest(r=>sum(r)),after=longest(r=>sum(r.slice(1))),total=sum(edges);
+ const isH=cfg.ouSeries==='VRV H STD(VN)'||hasBymPiping(cfg.model),lim=isH?[165,190,1000,90]:cfg.model==='RXYMQ4AVE'?[50,65,250,40]:['RXYMQ5BVM','RXYMQ6BVM'].includes(cfg.model)?[70,90,300,40]:[100,130,300,40];
+ const warns=[];
+ const checks=[['Tuyến thực xa nhất',actual],['Tuyến tương đương xa nhất',eq],['Tổng chiều dài thực toàn hệ',total],['Sau bộ chia đầu đến dàn xa nhất',after]];
+ for(const [i,[name,meters]] of checks.entries()){if(meters>lim[i])warns.push(name+' đạt '+meters.toFixed(2)+' m, vượt giới hạn '+lim[i]+' m.')}
+ if(!isH)warns.push('Giới hạn VRV IV S theo catalogue Daikin VN, trang 130: '+lim[0]+' m thực / '+lim[1]+' m tương đương, tổng '+lim[2]+' m, sau bộ chia đầu '+lim[3]+' m.');
+ if(isH&&after>40&&after<=90)warns.push('Tuyến sau bộ chia đầu vượt 40 m: cần kiểm tra điều kiện mở rộng trong Engineering Data Book.');
+ const up=['RXYQ8AYM','RXYQ10AYM'].includes(cfg.model)&&eq>=90;
+ if(isH&&!up&&eq>=90)warns.push('Tra bảng tăng cỡ theo model cho tuyến từ 90 m.');
+ if(up)warns.push('Ống lỏng chính dự kiến tăng từ 9.5 lên 12.7 mm. Dấu ? ở ống hơi chính yêu cầu đối chiếu bảng tăng cỡ theo model.');
+ if(!isH&&eq>=90)warns.push('Đối chiếu yêu cầu tăng ống chính theo đúng model VRV IV S; cỡ hiển thị là cỡ cơ sở.');
+ const missing=edges.filter(e=>!e.reading?.real).length;
+ const status=[missing?'Còn '+missing+' đoạn thiếu chiều dài thực.':'Đã nhập đủ chiều dài thực.', 'Tuyến xa nhất: '+(all?'':'≥ ')+actual.toFixed(2)+' m thực; '+(eqKnown?'':'≥ ')+eq.toFixed(2)+' m tương đương.',...warns];
+ return {up,status:status.join(' ')};
+}
+let selectedEdge;
+function editEdge(e,cfg,key){
+ selectedEdge={e,cfg,key};el('edgeTitle').textContent=e.name;el('edgeReal').value=e.reading?.real??'';el('edgeExtra').value=e.reading?.extra??'';el('edgeDialog').showModal();el('edgeReal').focus();
+}
+el('edgeForm').onsubmit=e=>{e.preventDefault();const {e:edge,cfg,key}=selectedEdge;
+ (cfg.lengths??={})[edge.key]={real:el('edgeReal').valueAsNumber,extra:el('edgeExtra').value===''?null:el('edgeExtra').valueAsNumber};
+ el('edgeDialog').close();drawPiping(key);
+};
+el('edgeCancel').onclick=()=>el('edgeDialog').close();
+el('edgeClear').onclick=()=>{const {cfg,e,key}=selectedEdge;if(cfg.lengths)delete cfg.lengths[e.key];el('edgeDialog').close();drawPiping(key)};
+function drawPiping(active=el('pipeSystem').value){
+ const picker=el('pipeSystem');picker.replaceChildren();
+ for(const key of systems)picker.add(new Option(ouConfigs.get(key)?.ouName||key,key));
+ picker.value=systems.includes(active)?active:systems[0];
+ const key=picker.value,cfg=ouConfigs.get(key),view=el('pipeView'),tree=el('pipeTree'),message=el('pipeMsg');
+ el('jointMode').hidden=true;view.replaceChildren();el('jointRows').replaceChildren();tree.textContent='';message.textContent='';
+ if(!cfg?.model){message.textContent='Chọn dàn nóng và bấm OK trong Outdoor Units để tạo sơ đồ.';return}
+ const rows=items.filter(r=>r[0]==='Dàn lạnh'&&assignments.get(r)===key),tot=ivsTotals(rows);
+ const choices=ouChoiceRows(tot,+cfg.ouLimit,+cfg.ouCP,+cfg.ouHP,cfg.ouSeries);
+ if(choices.length&&(!cfg.manualOU||!choices.some(r=>r[0]===cfg.model))){if(!choices.some(r=>r[0]===cfg.model))cfg.manualOU=false;cfg.model=preferredOU(choices,tot,cfg.ouSeries)[0]}
+ const modelRow=seriesMap.get(cfg.ouSeries)?.rows.find(r=>r[0]===cfg.model);
+ const title=cfg.ouName+' ['+cfg.model+']'+(modelRow&&tot.known?' · '+Math.round(100*tot.ci/modelRow[1])+'%':'');
+ tree.textContent=title+'\n'+rows.map(r=>' └ '+r[1]+' ['+r[2]+']'+(r[3]>1?' × '+r[3]:'')).join('\n');
+ if(!tot.count||!ouChoiceRows(tot,+cfg.ouLimit,+cfg.ouCP,+cfg.ouHP,cfg.ouSeries).some(r=>r[0]===cfg.model)){message.textContent='Danh sách dàn đã thay đổi. Mở Outdoor Units để chọn lại tổ hợp.';return}
+ const newSeries=Boolean(seriesMap.get(cfg.ouSeries)?.page);
+ const isBYM=hasBymPiping(cfg.model), schematicOnly=newSeries&&!isBYM;
+ const headings=isBYM?['Bộ chia','Trục vào (mm)','Trục ra (mm)','Nhánh dàn (mm)']:['Bộ chia','Cửa','Ống','Ø ống (mm)','Ø cắt (mm)','Phụ kiện'];
+ el('jointHead').replaceChildren(...headings.map(t=>{const th=document.createElement('th');th.textContent=t;return th}));
+ el('jointDetails').querySelector('summary').textContent=isBYM?'Bộ chia và cỡ ống (lỏng × hơi)':'Đầu nối và đầu giảm tại REFNET';
+ el('jointMode').hidden=!isBYM;el('jointStyle').value=cfg.jointStyle||'tight';
+ const units=rows.flatMap(r=>{const rowId=(r.pipeId??=r[4]?.pipeId??crypto.randomUUID());return Array.from({length:r[3]},(_,i)=>({id:rowId+'-'+i,name:r[1]+(r[3]>1?' · '+(i+1):''),model:r[2]}))});
+ const parts=schematicOnly?units.map(()=>({})):chainPipes(cfg.model,units,el('jointStyle').value),layout=pipeLayout(units,cfg.lengths??{}),routing=schematicOnly?{status:'Sơ đồ kết nối. Chờ bảng định cỡ ống và REFNET theo series.'}:routingReport(layout,cfg);
+ if(routing.up)parts[0].trunk='12.7×?';
+ const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg'),width=Math.max(460,180+units.length*145);
+ svg.setAttribute('viewBox','0 0 '+width+' 285');svg.setAttribute('role','group');svg.setAttribute('aria-label','Sơ đồ ống '+title);
+ svg.style.width=el('pipeScale').value==='fit'?'100%':(width*Number(el('pipeScale').value))+'px';view.append(svg);
+ function shape(tag,attrs,content){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);if(content!==undefined)n.textContent=content;svg.append(n);return n}
+ function line(x1,y1,x2,y2,color='#234fba'){shape('line',{x1,y1,x2,y2,stroke:color,'stroke-width':1.5})}
+ function box(x,y,w,h){shape('rect',{x,y,width:w,height:h,rx:2,fill:'white',stroke:'#243643'})}
+ function label(x,y,t,color='#132b39',anchor='middle'){shape('text',{x,y,'text-anchor':anchor,fill:color,'font-family':'Segoe UI, sans-serif','font-size':12},t)}
+ const catalogModules=moduleHpByModel[cfg.model]?.map(n=>cfg.model.replace(/\d+/,String(n)));
+ const modules=catalogModules??(modelRow?.[5]?.length?modelRow[5]:[cfg.model]);
+ label(62,16,cfg.ouName+' · '+cfg.model);
+ modules.forEach((model,i)=>{const x=22+i*110;label(x+40,38,model);box(x,45,80,52);for(let bar=x+5;bar<x+78;bar+=6)line(bar,49,bar,93,'#65737a');line(x+10,97,x+10,109);if(i)line(32,109,x+10,109)});
+ if(isBYM&&modules.length>1)modules.forEach((m,i)=>{box(24+i*110,78,76,18);label(62+i*110,92,bymPipe(Number(m.match(/\d+/)[0])),'#132b39')});
+ if(modules.length>1)label(42+110*modules.length,106,isBYM?(modules.length===2?'BHFP22R135':'BHFP22R168'):newSeries?'Bộ ghép mô-đun':modules.length===2?'BHFP22P100':'Bộ ghép 3 mô-đun','#25456c','start');
+ function hotspot(e,path,x,y){
+  const element=shape('path',{d:path,stroke:'#1781ad','stroke-opacity':0,'stroke-width':18,fill:'none',class:'pipeHot',tabindex:0,role:'button','aria-label':'Nhập mét · '+e.name});
+  element.onclick=()=>editEdge(e,cfg,key);element.onkeydown=ev=>{if(['Enter',' '].includes(ev.key)){ev.preventDefault();element.onclick()}};
+  const tag=shape('text',{x,y,'font-size':12,'text-anchor':'middle',fill:'#086a8d',style:'cursor:pointer;text-decoration:underline'},e.reading?e.reading.real+' m':'+ mét');tag.onclick=element.onclick;
+ }
+ line(32,109,32,145);
+ if(routing.up){shape('circle',{cx:32,cy:109,r:3.5,fill:'#cc3a20'});cells(el('jointRows').insertRow(),[cfg.model,'Đầu dàn nóng','Lỏng','12.7','9.5','Đầu chuyển hàn 9.5 ↔ 12.7 mm · kiểm tra phụ kiện đi kèm'])}
+ let prev=32;
+ units.forEach((u,i)=>{
+  const x=160+i*145,last=i===units.length-1;
+  line(prev,145,x,145);line(x,145,x,211);
+  if(!last){shape('polygon',{points:(x-7)+',145 '+(x+5)+',139 '+(x+5)+',152',fill:'#234fba'});label(x+10,163,parts[i].joint,'#25456c','start')}
+  if(!last || i===0)label((prev+x)/2,138,parts[i].trunk??'Tra catalogue','#234fba');
+  label(x+4,201,parts[i].port??'Tra đầu nối','#234fba','start');
+  if(!last&&!schematicOnly)label(x+10,178,'CI '+parts[i].ci,'#52636b','start');
+  const route=layout.routes[i],end=route.at(-1);
+  if(!last&&!schematicOnly)hotspot(route.at(-2),'M '+prev+' 145 H '+x,(prev+x)/2,121);
+  const start=last?prev:x;
+  if(!schematicOnly)hotspot(end,'M '+start+' 145 H '+x+' V 211',x-22,193);
+  if(!last&&isBYM)cells(el('jointRows').insertRow(),['J'+(i+1)+' · '+parts[i].joint,parts[i].trunk,parts[i+1].trunk,parts[i].port]);
+  if(!last&&!newSeries){for(const f of jointSchedule(parts[i],parts[i+1])){
+   cells(el('jointRows').insertRow(),['J'+(i+1)+' · '+parts[i].joint,f.end+' ('+f.port+')',f.side,f.diam||'—',f.cut,f.code]);
+   if(f.rank)shape('circle',{cx:x+(f.end==='Ra tuyến'?8:f.end==='Vào'?-8:0),cy:145+(f.end==='Ra dàn'?8:0),r:3,fill:'#cc3a20'});
+  }}
+  box(x-24,211,48,30);for(let bar=x-17;bar<x+19;bar+=7)line(bar,216,bar,236,'#66777e');
+  label(x,258,u.name);label(x,275,u.model);prev=x;
+ });
+ message.textContent=schematicOnly?routing.status:routing.status+' Bấm đường ống hoặc + mét để sửa.'+(isBYM?' Cỡ cơ sở, mm (lỏng × hơi).':' Chấm đỏ: xem bảng đầu chuyển.');
+ if (/^RX(?:UQ|Q)\d+BYM$/.test(cfg.model)){
+  message.textContent+=' Cỡ ống giữa các REFNET và cấp bộ chia là kết quả sơ bộ theo CI phía sau, cần đối chiếu với Xpress.';
+  if(cfg.model.startsWith('RXUQ')&&modules.length>1){
+   const kitSize=modules.length===2?'135':'168';
+   message.textContent+=' Bộ ghép mô-đun cần xác nhận: trang 73 ghi BHFP22R'+kitSize+', trang 301 ghi BHFP26R'+kitSize+'.';
+  }
+  if(cfg.model.startsWith('RXQ')&&el('jointStyle').value==='tight')message.textContent+=' Trang 302 ghi đuôi T trong bảng TIGHTFIT và T8 trên hình. Sơ đồ dùng mã trong bảng, cần xác nhận khi đặt hàng.';
+ }
+}
+el('jointStyle').onchange=()=>{const key=el('pipeSystem').value;ouConfigs.get(key).jointStyle=el('jointStyle').value;drawPiping(key)};
+el('pipeSystem').onchange=()=>drawPiping();el('pipeScale').onchange=()=>drawPiping();
+function projectData(){return {version:2,project:el('project').value,client:el('client').value,ref:el('ref').value,revision:el('revision').value,items,systems,outdoorSettings:Object.fromEntries(ouConfigs),pipeIds:items.map(r=>r.pipeId??null),groups:items.map(i=>assignments.get(i)??null),roomDesign:['rooms','hp','equiv'].map(id=>el(id).value),segments:el('segments').value}}
+function validate(d){
+ if(!d||![1,2].includes(d.version)||!Array.isArray(d.items)||!d.items.every(i=>Array.isArray(i)&&['Dàn lạnh','Dàn nóng'].includes(i[0])&&typeof i[1]==='string'&&typeof i[2]==='string'&&Number.isInteger(i[3])&&i[3]>0&&i[3]<=99999&&(!i[4]||(Number.isFinite(i[4].dbt)&&Number.isFinite(i[4].rh)))))throw Error();
+ if(d.version===2&&(!Array.isArray(d.systems)||!d.systems.length||!d.systems.every(n=>typeof n==='string'&&n)||new Set(d.systems).size!==d.systems.length||!Array.isArray(d.groups)||d.groups.length!==d.items.length||d.groups.some(n=>n!==null&&!d.systems.includes(n))))throw Error();
+}
+function loadProject(d){
+ ouConfigs.clear();for(const name of d.systems??[]){const cfg=d.outdoorSettings?.[name];if(cfg&&typeof cfg==='object')ouConfigs.set(name,cfg)}
+ setSystems(d.systems??['System 1']);items=d.items;items.forEach((r,i)=>{if(typeof d.pipeIds?.[i]==='string')r.pipeId=d.pipeIds[i]});assignments=new Map();items.forEach((i,k)=>{if(i[0]==='Dàn lạnh')assignments.set(i,d.groups?d.groups[k]:systems[0])});
+ for(const id of meta)el(id).value=d[id]??'';
+ ['rooms','hp','equiv'].forEach((id,k)=>el(id).value=d.roomDesign?.[k]??(k===1?'0':''));
+ el('segments').value=d.segments??'';for(const id of ['plan','meters','result','outcome'])el(id).textContent='';el('loadKw').value='';chosen=null;render();showTab('indoor');
+}
+el('save').onclick=()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(projectData(),null,2)],{type:'application/json'}));a.href=url;a.download=(el('project').value||'VRV')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+const replaceOK=()=>!(items.length||meta.some(id=>el(id).value)||el('rooms').value||el('segments').value||systems.length>1)||confirm('Thay dự án đang mở?');
+el('new').onclick=()=>{if(replaceOK())loadProject({items:[]})};
+el('open').onclick=()=>el('openFile').click();el('openFile').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;const d=JSON.parse(await f.text());validate(d);if(replaceOK())loadProject(d)}catch{alert('Tệp dự án không hợp lệ.')}finally{e.target.value=''}};
+window.addEventListener('beforeprint',refreshReports);el('print').onclick=()=>{showTab('reports');window.print()};
+setSystems(systems);render();showTab('indoor');</script></body></html>
