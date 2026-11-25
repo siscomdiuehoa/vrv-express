@@ -130,6 +130,7 @@ el('chooseOutdoor').onclick=()=>{
   if(!found){el('outcome').textContent='Model '+model+' chưa có dữ liệu công suất trong danh sách.';return}
   index+=capacityIndex(model)*qty;capacity+=found[1]*qty;count+=qty;
  }
+ capacity=Math.round(capacity*1000)/1000;
  const options=catalog.map(([hp,kw])=>({hp,kw,ratio:index/(25*hp)*100}));
  const matches=options.filter(({ratio,kw})=>ratio>=50 && ratio<=130 && kw>=capacity);
  const label=o=>'RXYQ'+o.hp+'U · '+o.kw+' kW · kết nối '+o.ratio.toFixed(1)+'%';
